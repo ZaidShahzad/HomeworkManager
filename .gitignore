@@ -1,0 +1,3 @@
+# Ignore cmake-build folder
+HomeworkManager/cmake-build-debug/
+HomeworkManager/.idea/
