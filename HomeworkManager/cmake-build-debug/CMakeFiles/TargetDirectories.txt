@@ -1,3 +1,0 @@
-C:/Users/Zaid/Desktop/HomeworkManager/HomeworkManager/cmake-build-debug/CMakeFiles/HomeworkManager.dir
-C:/Users/Zaid/Desktop/HomeworkManager/HomeworkManager/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Zaid/Desktop/HomeworkManager/HomeworkManager/cmake-build-debug/CMakeFiles/rebuild_cache.dir
