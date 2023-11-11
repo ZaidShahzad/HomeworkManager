@@ -1,3 +1,4 @@
 # Ignore local folders that get created
+.idea/
 HomeworkManager/cmake-build-debug/
 HomeworkManager/.idea/
