@@ -5,6 +5,10 @@
 #include <vector>
 
 
+/*
+ * This class is to show information about the project
+ *
+ */
 class ProjectInfo {
 
 private:

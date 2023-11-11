@@ -3,14 +3,19 @@
 
 #include "../ProjectInfo/ProjectInfo.h"
 
+/*
+ * This class is meant to handle everything related to the terminal
+ *
+ */
+
 class HWMTerminal {
 
 private:
     ProjectInfo* projectInfo;
 
 public:
-
     HWMTerminal(ProjectInfo* projectInfo);
+
     void printMainPage();
     ProjectInfo* getProjectInfo();
 

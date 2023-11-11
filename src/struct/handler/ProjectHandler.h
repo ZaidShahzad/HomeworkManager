@@ -5,6 +5,10 @@
 #include "../ProjectInfo/ProjectInfo.h"
 
 
+/*
+ * This class will handle everything and anything related to the project
+ *
+ */
 class ProjectHandler {
 
 private:
@@ -15,7 +19,6 @@ public:
     ProjectHandler();
     ProjectInfo* getProjectInfo();
     HWMTerminal* getTerminal();
-
 
 };
 
