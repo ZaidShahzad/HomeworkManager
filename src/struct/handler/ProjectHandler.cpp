@@ -5,10 +5,10 @@ ProjectHandler::ProjectHandler() {
     this->terminal = new HWMTerminal(this->projectInfo);
 }
 
-ProjectInfo *ProjectHandler::getProjectInfo() {
+ProjectInfo* ProjectHandler::getProjectInfo() {
     return this->projectInfo;
 }
 
-HWMTerminal *ProjectHandler::getTerminal() {
+HWMTerminal* ProjectHandler::getTerminal() {
     return this->terminal;
 }

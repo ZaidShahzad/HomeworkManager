@@ -6,9 +6,7 @@
 /* Driver Code */
 
 int main() {
-
     ProjectHandler* handler = new ProjectHandler();
-    handler->getTerminal()->printMainPage();
-
+    handler->getTerminal()->gotoMainMenu();
     return 0;
 }
