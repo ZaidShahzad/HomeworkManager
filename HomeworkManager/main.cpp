@@ -1,6 +1,15 @@
 #include <iostream>
 
+#include "struct/manager/ProjectHandler.h"
+
+
+/* Driver Code */
+
 int main() {
-    std::cout << "Hello World!" << std::endl;
+
+    ProjectHandler* handler = new ProjectHandler();
+    handler->getTerminal()->printMainPage();
+
+
     return 0;
 }

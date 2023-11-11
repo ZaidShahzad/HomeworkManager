@@ -3,4 +3,4 @@ project(HomeworkManager)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(HomeworkManager main.cpp)
+add_executable(HomeworkManager main.cpp struct/terminal/HWMTerminal.cpp struct/projectinfo/ProjectInfo.cpp struct/manager/ProjectHandler.cpp)
