@@ -19,6 +19,10 @@ Page HWMTerminal::setCurrentPage(Page page) {
 // This function will get a response from the user and return a vector as the user's response
 // EX: If the user typed "create Biology", it will return a vector like ["create", "Biology"]
 std::vector<std::string> HWMTerminal::getResponseFromUser() {
+
+    std::string userInput;
+    std::cin >> userInput;
+
     std::string response;
     std::vector<std::string> args;
     std::getline(std::cin, response);
@@ -59,16 +63,16 @@ void HWMTerminal::gotoMainMenu() {
     this->setCurrentPage(MAIN_MENU);
     this->printMainPage();
 
-    std::vector<std::string> response = getResponseFromUser();
+    std::vector<std::string> userInput = getResponseFromUser();
 
-    std::string command = response[0];
+    std::string command = userInput[0];
 
     if(command == "create") {
-        std::string className = response[1];
+        std::string className = userInput[1];
         // Handle creation of class
     }
     else if(command == "delete") {
-        std::string numberOfClass = response[1];
+        std::string numberOfClass = userInput[1];
         // Handle deletion of class
     }
 }
