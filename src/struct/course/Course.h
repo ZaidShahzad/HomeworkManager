@@ -5,12 +5,14 @@
 #include <vector>
 #include <string>
 
+#include "../Assignment/Assignment.h"
+
 
 
 class Course {
 private: 
     std::string courseName;
-    std::vector<std::string*> assignments; //vector of pointers
+    std::vector<Assignment*> assignments; //vector of pointers
 
 
 public:

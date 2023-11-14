@@ -1,7 +1,7 @@
 #include "course.h"
 
 // getter for courseName
-std::string Courses::getCoursName(){
+std::string Courses::getCourseName(){
     return this->courseName;
 }
 
