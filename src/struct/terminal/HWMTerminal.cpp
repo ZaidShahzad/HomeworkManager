@@ -59,22 +59,39 @@ void HWMTerminal::printMainMenu() {
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
-    std::cout << "";
 }
 
 // This function will print the page where it will show all assignments that are due today
 void HWMTerminal::printDueTodayAssignmentsPage() {
-
+    std::cout << "\n";
+    std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | Due Today -*-\n";
+    std::cout << "\n";
+    std::cout << "There is nothing due today :)\n";
+    std::cout << "\n";
+    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << "\n";
 }
 
 // This function will print the page where it will show all assignments
 void HWMTerminal::printAllAssignmentsPage() {
-
+    std::cout << "\n";
+    std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | All Assignments -*-\n";
+    std::cout << "\n";
+    std::cout << "There are no assignments :)\n";
+    std::cout << "\n";
+    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << "\n";
 }
 
 // This function will print the page where it will show all assignments for a specific course
 void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
-
+    std::cout << "\n";
+    std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | " << courseName << "'s Assignments -*-\n";
+    std::cout << "\n";
+    std::cout << "There are no assignments for this class :)\n";
+    std::cout << "\n";
+    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << "\n";
 }
 
 
@@ -82,18 +99,45 @@ void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
 void HWMTerminal::gotoDueTodayAssignmentsPage() {
     this->setCurrentPage(DUE_TODAY_ASSIGNMENTS);
     this->printDueTodayAssignmentsPage();
+
+    std::vector<std::string> userInput = getResponseFromUser();
+    std::string command = userInput[0];
+
+    // Send them to main if they type in /main
+    if(command == "/main") {
+        this->gotoMainMenu();
+        return;
+    }
 }
 
 // This function goes to the All Assignments Page
 void HWMTerminal::gotoAllAssignmentsPage() {
     this->setCurrentPage(ALL_ASSIGNMENTS);
     this->printAllAssignmentsPage();
+
+    std::vector<std::string> userInput = getResponseFromUser();
+    std::string command = userInput[0];
+
+    // Send them to main if they type in /main
+    if(command == "/main") {
+        this->gotoMainMenu();
+        return;
+    }
 }
 
 // This function goes to the Course Assignments Page
 void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
     this->setCurrentPage(VIEW_COURSE_ASSIGNMENTS);
     this->printViewCourseAssignmentsPage(courseName);
+
+    std::vector<std::string> userInput = getResponseFromUser();
+    std::string command = userInput[0];
+
+    // Send them to main if they type in /main
+    if(command == "/main") {
+        this->gotoMainMenu();
+        return;
+    }
 }
 
 // This function will send the user to the Main Menu and wait for a response. When the response is given,
@@ -103,7 +147,6 @@ void HWMTerminal::gotoMainMenu() {
     this->printMainMenu();
 
     std::vector<std::string> userInput = getResponseFromUser();
-
     std::string command = userInput[0];
 
     // Handle commands
