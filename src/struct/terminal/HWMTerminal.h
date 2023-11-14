@@ -10,7 +10,10 @@
  */
 
 enum Page {
-    MAIN_MENU
+    MAIN_MENU,
+    DUE_TODAY_ASSIGNMENTS,
+    ALL_ASSIGNMENTS,
+    COURSE_ASSIGNMENTS
 };
 
 class HWMTerminal {
@@ -22,8 +25,7 @@ private:
 public:
     HWMTerminal(ProjectInfo* projectInfo);
 
-    void printMainPage();
-
+    void printMainMenu();
     void gotoMainMenu();
 
     std::vector<std::string> getResponseFromUser();

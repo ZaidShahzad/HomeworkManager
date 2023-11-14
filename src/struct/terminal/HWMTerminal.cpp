@@ -43,16 +43,23 @@ std::vector<std::string> HWMTerminal::getResponseFromUser() {
     return args;
 }
 
-void HWMTerminal::printMainPage() {
+void HWMTerminal::printMainMenu() {
     std::cout << "\n";
     std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | Main Page -*-\n";
     std::cout << "\n";
     std::cout << "Your Courses\n";
-    std::cout << "...\n";
+    std::cout << "  * No courses found :(\n";
     std::cout << "\n";
-    std::cout << "Enter 'create <className>' or 'delete <numberOfClass>' to add or remove a class\n";
+    std::cout << "Create or Delete Course:\n";
+    std::cout << "  * Enter '/createcourse <className>'          Create a course\n";
+    std::cout << "  * Enter '/delete <className>'                Delete a Course\n";
     std::cout << "\n";
-    std::cout << "Please type in a command to continue.\n";
+    std::cout << "View Assignments\n";
+    std::cout << " * Enter '/today'                              View what assignments are due today\n";
+    std::cout << " * Enter '/all'                                View assignments of all courses\n";
+    std::cout << " * Enter '/<courseName>'                       View assignments of a specific course\n";
+    std::cout << "\n";
+    std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
     std::cout << "";
 }
@@ -61,17 +68,17 @@ void HWMTerminal::printMainPage() {
 // it will do the necessary actions depending on the response.
 void HWMTerminal::gotoMainMenu() {
     this->setCurrentPage(MAIN_MENU);
-    this->printMainPage();
+    this->printMainMenu();
 
     std::vector<std::string> userInput = getResponseFromUser();
 
     std::string command = userInput[0];
 
-    if(command == "create") {
+    if(command == "/createcourse") {
         std::string className = userInput[1];
         // Handle creation of class
     }
-    else if(command == "delete") {
+    else if(command == "/deletecourse") {
         std::string numberOfClass = userInput[1];
         // Handle deletion of class
     }
