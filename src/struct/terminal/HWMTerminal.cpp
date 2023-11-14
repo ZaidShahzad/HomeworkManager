@@ -20,9 +20,6 @@ Page HWMTerminal::setCurrentPage(Page page) {
 // EX: If the user typed "create Biology", it will return a vector like ["create", "Biology"]
 std::vector<std::string> HWMTerminal::getResponseFromUser() {
 
-    std::string userInput;
-    std::cin >> userInput;
-
     std::string response;
     std::vector<std::string> args;
     std::getline(std::cin, response);
