@@ -23,7 +23,7 @@ public:
     void setCourseName(std::string name);
 
     //getter for assignments
-    std::vector<std::string*> getAssignments(); 
+    std::vector<Assignment*> getAssignments();
 
 
 };
