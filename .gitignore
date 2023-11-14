@@ -2,3 +2,6 @@
 .idea/
 src/cmake-build-debug/
 src/.idea/
+
+# Ignoring macOS executable files
+*.app
