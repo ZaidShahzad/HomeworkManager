@@ -35,6 +35,7 @@ public:
     void gotoAllAssignmentsPage();
     void gotoViewCourseAssignmentsPage(std::string courseName);
 
+
     std::vector<std::string> getResponseFromUser();
 
     Page getCurrentPage();

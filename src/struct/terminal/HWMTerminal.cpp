@@ -108,6 +108,12 @@ void HWMTerminal::gotoDueTodayAssignmentsPage() {
         this->gotoMainMenu();
         return;
     }
+    // Invalid args check
+    else {
+        std::cout << "Invalid Args, try '/main'.\n";
+        this->gotoDueTodayAssignmentsPage();
+        return;
+    }
 }
 
 // This function goes to the All Assignments Page
@@ -123,6 +129,12 @@ void HWMTerminal::gotoAllAssignmentsPage() {
         this->gotoMainMenu();
         return;
     }
+    // Invalid args check
+    else {
+        std::cout << "Invalid Args, try '/main'.\n";
+        this->gotoDueTodayAssignmentsPage();
+        return;
+    }
 }
 
 // This function goes to the Course Assignments Page
@@ -136,6 +148,12 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
     // Send them to main if they type in /main
     if(command == "/main") {
         this->gotoMainMenu();
+        return;
+    }
+    // Invalid args check
+    else {
+        std::cout << "Invalid Args, try '/main'.\n";
+        this->gotoDueTodayAssignmentsPage();
         return;
     }
 }
@@ -167,5 +185,11 @@ void HWMTerminal::gotoMainMenu() {
     else if(command == "/view") {
         std::string className = userInput[1];
         this->gotoViewCourseAssignmentsPage(className);
+    }
+    // Invalid args check
+    else {
+        std::cout << "Invalid Args, try '/createcourse', '/deletecourse', '/today', '/all', '/view'.\n";
+        this->gotoMainMenu();
+        return;
     }
 }
