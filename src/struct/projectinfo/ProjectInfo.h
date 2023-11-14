@@ -13,7 +13,7 @@
 class ProjectInfo {
 
 private:
-    std::string VERSION = "0.0.2-Beta";
+    std::string VERSION = "0.1.0-Beta";
     std::vector<std::string> AUTHORS = {"Diego Romero", "Zaid Shahzad", "Essam Abdulraouf", "Adam Mesiya"};
 
 public:
