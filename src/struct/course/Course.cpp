@@ -1,4 +1,4 @@
-#include Course.h
+#include "course.h"
 
 // getter for courseName
 std::string Courses::getCoursName(){
