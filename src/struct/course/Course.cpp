@@ -1,16 +1,16 @@
-#include "course.h"
+#include "Course.h"
 
 // getter for courseName
-std::string Courses::getCoursName(){
+std::string Course::getCourseName(){
     return this->courseName;
 }
 
 // setter for courseName
-void Courses::setCourseName(std::string name) {
+void Course::setCourseName(std::string name) {
     this->courseName = name;
 }
 
 //getter for assignments
-std::vector<std::string*> Courses::getAssignments() {
+std::vector<std::string*> Course::getAssignments() {
     return this->assignments;
 }
