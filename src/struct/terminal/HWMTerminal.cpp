@@ -52,12 +52,12 @@ void HWMTerminal::printMainMenu() {
     std::cout << "\n";
     std::cout << "Create or Delete Course:\n";
     std::cout << "  * Enter '/createcourse <className>'          Create a course\n";
-    std::cout << "  * Enter '/delete <className>'                Delete a Course\n";
+    std::cout << "  * Enter '/deletecourse <className>'          Delete a Course\n";
     std::cout << "\n";
     std::cout << "View Assignments\n";
     std::cout << " * Enter '/today'                              View what assignments are due today\n";
     std::cout << " * Enter '/all'                                View assignments of all courses\n";
-    std::cout << " * Enter '/<courseName>'                       View assignments of a specific course\n";
+    std::cout << " * Enter '/view <courseName>'                  View assignments of a specific course\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
@@ -79,7 +79,17 @@ void HWMTerminal::gotoMainMenu() {
         // Handle creation of class
     }
     else if(command == "/deletecourse") {
-        std::string numberOfClass = userInput[1];
+        std::string className = userInput[1];
         // Handle deletion of class
+    }
+    else if(command == "/today") {
+        // Handle showing all assignments due today
+    }
+    else if(command == "/all") {
+        // Handle showing assignments of all courses
+    }
+    else if(command == "/view") {
+        std::string className = userInput[1];
+        // Handle assignments of a specific class
     }
 }
