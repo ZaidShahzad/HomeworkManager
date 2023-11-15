@@ -56,6 +56,7 @@ void HWMTerminal::printMainMenu() {
     std::cout << " * Enter '/today'                              View what assignments are due today\n";
     std::cout << " * Enter '/all'                                View assignments of all courses\n";
     std::cout << " * Enter '/view <courseName>'                  View assignments of a specific course\n";
+    std::cout << " * Enter '/todolist'                           View Todo List\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
@@ -158,6 +159,14 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
     }
 }
 
+///TODO
+void HWMTerminal::viewTodaysTodoList() {
+    this->setCurrentPage(AUTO_TODO_LIST);
+    std::cout << "How many days in advance do you wish to start your work? [Enter a number]\n";
+
+    return;
+}
+
 // This function will send the user to the Main Menu and wait for a response. When the response is given,
 // it will do the necessary actions depending on the response.
 void HWMTerminal::gotoMainMenu() {
@@ -186,6 +195,9 @@ void HWMTerminal::gotoMainMenu() {
         std::string className = userInput[1];
         this->gotoViewCourseAssignmentsPage(className);
     }
+    else if(command == "/todolist") {
+        this->viewTodaysTodoList();
+    }
     // Invalid args check
     else {
         std::cout << "Invalid Args, try '/createcourse', '/deletecourse', '/today', '/all', '/view'.\n";
@@ -193,3 +205,5 @@ void HWMTerminal::gotoMainMenu() {
         return;
     }
 }
+
+
