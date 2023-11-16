@@ -30,12 +30,12 @@ public:
     void printDueTodayAssignmentsPage();
     void printAllAssignmentsPage();
     void printViewCourseAssignmentsPage(std::string courseName);
-    void viewTodaysTodoList();
 
     void gotoMainMenu();
     void gotoDueTodayAssignmentsPage();
     void gotoAllAssignmentsPage();
     void gotoViewCourseAssignmentsPage(std::string courseName);
+    void gotoAutoTodoList();
 
 
     std::vector<std::string> getResponseFromUser();

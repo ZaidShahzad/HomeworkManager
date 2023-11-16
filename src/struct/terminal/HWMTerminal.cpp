@@ -159,8 +159,8 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
     }
 }
 
-///TODO
-void HWMTerminal::viewTodaysTodoList() {
+///TODO -essam
+void HWMTerminal::gotoAutoTodoList() {
     this->setCurrentPage(AUTO_TODO_LIST);
     std::cout << "How many days in advance do you wish to start your work? [Enter a number]\n";
 
@@ -196,7 +196,7 @@ void HWMTerminal::gotoMainMenu() {
         this->gotoViewCourseAssignmentsPage(className);
     }
     else if(command == "/todolist") {
-        this->viewTodaysTodoList();
+        this->gotoAutoTodoList();
     }
     // Invalid args check
     else {
