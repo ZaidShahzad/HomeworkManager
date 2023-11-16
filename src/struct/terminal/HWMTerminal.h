@@ -1,7 +1,8 @@
 #ifndef HOMEWORKMANAGER_HWMTERMINAL_H
 #define HOMEWORKMANAGER_HWMTERMINAL_H
 
-#include "../ProjectInfo/ProjectInfo.h"
+#include <iostream>
+#include <vector>
 
 /*
  *
@@ -21,10 +22,9 @@ class HWMTerminal {
 
 private:
     Page currentPage;
-    ProjectInfo* projectInfo;
 
 public:
-    HWMTerminal(ProjectInfo* projectInfo);
+    HWMTerminal();
 
     void printMainMenu();
     void printDueTodayAssignmentsPage();
@@ -41,7 +41,7 @@ public:
     std::vector<std::string> getResponseFromUser();
 
     Page getCurrentPage();
-    Page setCurrentPage(Page page);
+    void setCurrentPage(Page page);
 
 
 };

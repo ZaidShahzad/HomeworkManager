@@ -1,8 +1,10 @@
 #include "HWMTerminal.h"
 #include <iostream>
+#include "../utils/Utils.h"
 
-HWMTerminal::HWMTerminal(ProjectInfo* projectInfo) {
-    this->projectInfo = projectInfo;
+ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
+
+HWMTerminal::HWMTerminal() {
     this->currentPage = MAIN_MENU;
 }
 
@@ -12,7 +14,7 @@ Page HWMTerminal::getCurrentPage() {
 }
 
 // This will allow you to set the page the user is on
-Page HWMTerminal::setCurrentPage(Page page) {
+void HWMTerminal::setCurrentPage(Page page) {
     this->currentPage = page;
 }
 
@@ -43,7 +45,7 @@ std::vector<std::string> HWMTerminal::getResponseFromUser() {
 // This function will print the main menu (first page you land on when program starts)
 void HWMTerminal::printMainMenu() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | Main Page -*-\n";
+    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Main Page -*-\n";
     std::cout << "\n";
     std::cout << "Your Courses\n";
     std::cout << "  * No courses found :(\n";
@@ -65,7 +67,7 @@ void HWMTerminal::printMainMenu() {
 // This function will print the page where it will show all assignments that are due today
 void HWMTerminal::printDueTodayAssignmentsPage() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | Due Today -*-\n";
+    //std::cout << "-*- Homework Manager (" << this->projectInfo.getVersion() << ") | Due Today -*-\n";
     std::cout << "\n";
     std::cout << "There is nothing due today :)\n";
     std::cout << "\n";
@@ -76,7 +78,7 @@ void HWMTerminal::printDueTodayAssignmentsPage() {
 // This function will print the page where it will show all assignments
 void HWMTerminal::printAllAssignmentsPage() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | All Assignments -*-\n";
+    //std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | All Assignments -*-\n";
     std::cout << "\n";
     std::cout << "There are no assignments :)\n";
     std::cout << "\n";
@@ -87,7 +89,7 @@ void HWMTerminal::printAllAssignmentsPage() {
 // This function will print the page where it will show all assignments for a specific course
 void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | " << courseName << "'s Assignments -*-\n";
+    //std::cout << "-*- Homework Manager (" << this->projectInfo->getVersion() << ") | " << courseName << "'s Assignments -*-\n";
     std::cout << "\n";
     std::cout << "There are no assignments for this class :)\n";
     std::cout << "\n";

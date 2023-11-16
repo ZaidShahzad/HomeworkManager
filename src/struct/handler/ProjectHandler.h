@@ -13,13 +13,13 @@
 class ProjectHandler {
 
 private:
-    ProjectInfo* projectInfo;
-    HWMTerminal* terminal;
+    ProjectInfo projectInfo;
+    HWMTerminal terminal;
 
 public:
     ProjectHandler();
-    ProjectInfo* getProjectInfo();
-    HWMTerminal* getTerminal();
+    ProjectInfo getProjectInfo();
+    HWMTerminal getTerminal();
 
 };
 
