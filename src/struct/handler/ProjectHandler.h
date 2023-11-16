@@ -4,8 +4,9 @@
 #include "../terminal/HWMTerminal.h"
 #include "../projectInfo/ProjectInfo.h"
 #include "../assignment/Assignment.h"
+#include "../course/Course.h"
 
-#include <map>
+#include <vector>
 
 
 /*
@@ -19,7 +20,7 @@ private:
     ProjectInfo projectInfo;
     HWMTerminal terminal;
 
-    std::map<std::string, std::vector<Assignment*>> courses;
+    std::vector<Course*> courses;
 
 
 public:
@@ -27,7 +28,10 @@ public:
     ProjectInfo getProjectInfo();
     HWMTerminal getTerminal();
 
-    std::map<std::string, std::vector<Assignment*>> getCourses();
+    std::vector<Course*> getCourses();
+    bool createCourse(std::string courseName);
+
+    bool courseExists(std::string courseName);
 
 };
 

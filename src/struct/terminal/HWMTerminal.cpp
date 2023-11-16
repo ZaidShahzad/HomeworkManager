@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../utils/Utils.h"
 
+ProjectHandler handler = Utils::getInstance()->getProjectHandler();
 ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
 
 HWMTerminal::HWMTerminal() {
@@ -42,13 +43,24 @@ std::vector<std::string> HWMTerminal::getResponseFromUser() {
     return args;
 }
 
+void HWMTerminal::printCourses() {
+    for(Course* course : handler.getCourses()) {
+        std::cout << "  " << course->getCourseName() << "\n";
+    }
+}
+
 // This function will print the main menu (first page you land on when program starts)
 void HWMTerminal::printMainMenu() {
     std::cout << "\n";
     std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Main Page -*-\n";
     std::cout << "\n";
     std::cout << "Your Courses\n";
-    std::cout << "  * No courses found :(\n";
+    if(handler.getCourses().empty()) {
+        std::cout << "  * No courses found :(\n";
+    }
+    else {
+        printCourses();
+    }
     std::cout << "\n";
     std::cout << "Create or Delete Course:\n";
     std::cout << "  * Enter '/createcourse <className>'          Create a course\n";
@@ -181,7 +193,15 @@ void HWMTerminal::gotoMainMenu() {
     // Handle commands
     if(command == "/createcourse") {
         std::string className = userInput[1];
-        // Handle creation of class
+        bool courseCreated = handler.createCourse(className);
+
+        if(courseCreated) {
+            std::cout << "You have created the Course '" << className << "'.\n";
+        }
+        else {
+            std::cout << "Unfortunately, that course could not be created!\n";
+        }
+        this->gotoMainMenu();
     }
     else if(command == "/deletecourse") {
         std::string className = userInput[1];

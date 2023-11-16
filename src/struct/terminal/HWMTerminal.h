@@ -30,6 +30,7 @@ public:
     void printDueTodayAssignmentsPage();
     void printAllAssignmentsPage();
     void printViewCourseAssignmentsPage(std::string courseName);
+    void printCourses();
 
     void gotoMainMenu();
     void gotoDueTodayAssignmentsPage();

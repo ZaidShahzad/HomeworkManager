@@ -1,5 +1,10 @@
 #include "Course.h"
 
+Course::Course(std::string courseName) {
+    this->courseName = courseName;
+    this->assignments = {};
+}
+
 // getter for courseName
 std::string Course::getCourseName(){
     return this->courseName;

@@ -16,6 +16,7 @@ private:
 
 
 public:
+    Course(std::string courseName);
     //getter for courseName
     std::string getCourseName(); 
 
