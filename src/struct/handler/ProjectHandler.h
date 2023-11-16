@@ -2,7 +2,10 @@
 #define HOMEWORKMANAGER_PROJECTHANDLER_H
 
 #include "../terminal/HWMTerminal.h"
-#include "../ProjectInfo/ProjectInfo.h"
+#include "../projectInfo/ProjectInfo.h"
+#include "../assignment/Assignment.h"
+
+#include <map>
 
 
 /*
@@ -16,10 +19,15 @@ private:
     ProjectInfo projectInfo;
     HWMTerminal terminal;
 
+    std::map<std::string, std::vector<Assignment*>> courses;
+
+
 public:
     ProjectHandler();
     ProjectInfo getProjectInfo();
     HWMTerminal getTerminal();
+
+    std::map<std::string, std::vector<Assignment*>> getCourses();
 
 };
 
