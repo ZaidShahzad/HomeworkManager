@@ -16,6 +16,6 @@ void Course::setCourseName(std::string name) {
 }
 
 //getter for assignments
-std::vector<Assignment*> Course::getAssignments() {
+std::vector<Assignment*>& Course::getAssignments() {
     return this->assignments;
 }

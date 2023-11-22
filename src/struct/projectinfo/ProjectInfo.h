@@ -18,7 +18,7 @@ private:
 
 public:
     std::string getVersion();
-    std::vector<std::string> getAuthors();
+    std::vector<std::string>& getAuthors();
 
 };
 

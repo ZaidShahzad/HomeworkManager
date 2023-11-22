@@ -11,7 +11,7 @@ HWMTerminal ProjectHandler::getTerminal() {
     return this->terminal;
 }
 
-std::vector<Course*> ProjectHandler::getCourses() {
+std::vector<Course*>& ProjectHandler::getCourses() {
     return this->courses;
 }
 
@@ -29,8 +29,5 @@ bool ProjectHandler::createCourse(std::string courseName) {
 
     Course* course = new Course(courseName);
     this->getCourses().push_back(course);
-
-    std::cout << "Size: " << this->getCourses().size() << "\n";
-
     return true;
 }

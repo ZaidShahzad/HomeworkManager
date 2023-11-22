@@ -28,7 +28,7 @@ public:
     ProjectInfo getProjectInfo();
     HWMTerminal getTerminal();
 
-    std::vector<Course*> getCourses();
+    std::vector<Course*>& getCourses();
     bool createCourse(std::string courseName);
 
     bool courseExists(std::string courseName);

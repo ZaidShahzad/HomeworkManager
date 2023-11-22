@@ -24,7 +24,7 @@ public:
     void setCourseName(std::string name);
 
     //getter for assignments
-    std::vector<Assignment*> getAssignments();
+    std::vector<Assignment*>& getAssignments();
 
 
 };
