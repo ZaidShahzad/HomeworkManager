@@ -77,14 +77,14 @@ void HWMTerminal::printMainMenu() {
     }
     std::cout << "\n";
     std::cout << "Create or Delete Course:\n";
-    std::cout << "  * Enter '/createcourse <className>'          Create a course\n";
-    std::cout << "  * Enter '/deletecourse <className>'          Delete a Course\n";
+    std::cout << "  * /createcourse (/cc) <className>          Create a course\n";
+    std::cout << "  * /deletecourse (/dc) <className>          Delete a Course\n";
     std::cout << "\n";
     std::cout << "View Assignments\n";
-    std::cout << " * Enter '/today'                              View what assignments are due today\n";
-    std::cout << " * Enter '/all'                                View assignments of all courses\n";
-    std::cout << " * Enter '/view <courseName>'                  View assignments of a specific course\n";
-    std::cout << " * Enter '/todolist'                           View Todo List\n";
+    std::cout << " * /today                              View what assignments are due today\n";
+    std::cout << " * /all                                View assignments of all courses\n";
+    std::cout << " * /view <courseName>                  View assignments of a specific course\n";
+    std::cout << " * /todolist                           View Todo List\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
@@ -106,7 +106,14 @@ void HWMTerminal::printAllAssignmentsPage() {
     std::cout << "\n";
     std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | All Assignments -*-\n";
     std::cout << "\n";
-    std::cout << "There are no assignments :)\n";
+    if(handler.getCourses().empty()) {
+        std::cout << "  * No courses found :(\n";
+    }
+    else {
+        for(Course* course : handler.getCourses()) {
+            printAssignmentsForCourse(course->getCourseName());
+        }
+    }
     std::cout << "\n";
     std::cout << "--> Enter '/main' to go back to main menu\n";
     std::cout << "\n";
@@ -211,7 +218,7 @@ void HWMTerminal::gotoMainMenu() {
     std::string command = userInput[0];
 
     // Handle commands
-    if(command == "/createcourse") {
+    if(command == "/createcourse"|| command == "/cc") {
         std::string className = userInput[1];
         bool courseCreated = handler.createCourse(className);
 
@@ -223,7 +230,7 @@ void HWMTerminal::gotoMainMenu() {
         }
         this->gotoMainMenu();
     }
-    else if(command == "/deletecourse") {
+    else if(command == "/deletecourse" || command == "/dc") {
         std::string className = userInput[1];
         bool courseDeleted = handler.deleteCourse(className);
 
