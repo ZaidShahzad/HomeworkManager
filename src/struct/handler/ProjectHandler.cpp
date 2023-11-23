@@ -17,10 +17,28 @@ std::vector<Course*>& ProjectHandler::getCourses() {
 
 // This function will check if a course exists (if does, returns true, if not, returns false)
 bool ProjectHandler::courseExists(std::string courseName) {
-    for(Course* course : getCourses()) {
+    for(Course* course : this->getCourses()) {
         if(course->getCourseName() == courseName) return true;
     }
     return false;
+}
+
+// This function will return a course if it's found by the name passed it, if not, it will return nullptr
+Course *ProjectHandler::findCourseByName(std::string courseName) {
+    for(Course* course : this->getCourses()) {
+        if(course->getCourseName() == courseName) return course;
+    }
+    return nullptr;
+}
+
+// This function will return a course index if it's found by the name passed it, if not, it will return -1
+int ProjectHandler::findCourseIndexInVectorByName(std::string courseName) {
+    int index = 0;
+    for(Course* course : this->getCourses()) {
+        if(course->getCourseName() == courseName) return index;
+        index++;
+    }
+    return -1;
 }
 
 // This function creates a course. If it's done successfully, it returns true, if not, returns false
@@ -30,4 +48,17 @@ bool ProjectHandler::createCourse(std::string courseName) {
     Course* course = new Course(courseName);
     this->getCourses().push_back(course);
     return true;
+}
+
+
+// This function deletes a course. If it's done successfully, it returns true, if not, return false
+bool ProjectHandler::deleteCourse(std::string courseName) {
+    if(!courseExists(courseName)) return false;
+
+    int foundCourseIndex = this->findCourseIndexInVectorByName(courseName);
+    if(foundCourseIndex == -1) return false;
+
+    this->getCourses().erase(this->getCourses().begin() + foundCourseIndex);
+    return true;
+
 }

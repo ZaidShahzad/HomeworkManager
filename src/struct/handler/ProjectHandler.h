@@ -30,8 +30,11 @@ public:
 
     std::vector<Course*>& getCourses();
     bool createCourse(std::string courseName);
+    bool deleteCourse(std::string courseName);
 
     bool courseExists(std::string courseName);
+    Course* findCourseByName(std::string courseName);
+    int findCourseIndexInVectorByName(std::string courseName);
 
 };
 
