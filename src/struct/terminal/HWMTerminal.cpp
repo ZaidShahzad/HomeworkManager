@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include "../utils/Utils.h"
+#include <cstdlib>
 
 ProjectHandler handler = Utils::getInstance()->getProjectHandler();
 ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
@@ -21,6 +22,13 @@ void HWMTerminal::setCurrentPage(Page page) {
     this->currentPage = page;
 }
 
+void HWMTerminal::clearTerminal() {
+#ifdef _WIN32
+    std::system("cls"); // For Windows
+#else
+    std::system("clear"); // For Unix/Linux/MacOS
+#endif
+}
 // This function will get a response from the user and return a vector as the user's response
 // EX: If the user typed "create Biology", it will return a vector like ["create", "Biology"]
 std::vector<std::string> HWMTerminal::getResponseFromUser() {
@@ -219,6 +227,7 @@ void HWMTerminal::gotoAutoTodoList() {
 // This function will send the user to the Main Menu and wait for a response. When the response is given,
 // it will do the necessary actions depending on the response.
 void HWMTerminal::gotoMainMenu() {
+    this->clearTerminal();
     this->setCurrentPage(MAIN_MENU);
     this->printMainMenu();
 
