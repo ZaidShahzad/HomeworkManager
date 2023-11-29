@@ -50,6 +50,8 @@ public:
 //setter for the prepared description
    void setPreparationDescription(std::string newPrepDescription);
 
+   void setPriorityLevel(int priorityLevel);
+
 };
 
 #endif 

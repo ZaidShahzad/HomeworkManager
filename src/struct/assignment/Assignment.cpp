@@ -52,3 +52,7 @@ std::string Assignment::getPreparationDescription() {
 void Assignment::setPreparationDescription(std::string newPrepDescription) {
     this->preparedDescription = newPrepDescription;
 }
+
+void Assignment::setPriorityLevel(int priorityLevel) {
+    this->priorityLevel = priorityLevel;
+}

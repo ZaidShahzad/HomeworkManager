@@ -58,13 +58,14 @@ void HWMTerminal::printCourses() {
 void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
     Course* courseFound = handler.findCourseByName(courseName);
 
-    std::cout << courseName << "'s Assignments:\n";
+    std::cout << courseFound->getCourseName() << "'s Assignment:\n";
     if(courseFound->getAssignments().empty()) {
         std::cout << " * There are no assignments for this class :)\n";
     }
     else {
         for(Assignment* assignment : courseFound->getAssignments()) {
             std::cout << " * " << assignment->getTitle() << "\n";
+            std::cout << "   - Priority Level: " << assignment->getPriorityLevel() << std::endl;
         }
     }
 }
@@ -89,7 +90,7 @@ void HWMTerminal::printMainMenu() {
     std::cout << "Add Assignment To Course:\n";
     std::cout << "  * /<courseName> add <name> <priorityLevel>          Add a assignment to a course\n";
     std::cout << "      - Due Date Example: 1-1-2023\n";
-    std::cout << "      - Priority Level Example: ! -> !!!!!\n";
+    std::cout << "      - Priority Level Example: 1 -> 5\n";
     std::cout << "\n";
     std::cout << "View Assignments\n";
     std::cout << " * /today                                                       View what assignments are due today\n";
@@ -132,8 +133,9 @@ void HWMTerminal::printAllAssignmentsPage() {
 
 // This function will print the page where it will show all assignments for a specific course
 void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
+    Course* course = handler.findCourseByName(courseName);
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | " << courseName << "'s Assignments -*-\n";
+    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | " << course->getCourseName() << "'s Assignments -*-\n";
     std::cout << "\n";
     this->printAssignmentsForCourse(courseName);
     std::cout << "\n";
@@ -255,7 +257,27 @@ void HWMTerminal::gotoMainMenu() {
     }
     else if(handler.courseExists(getCommandWithoutSlash(command)) && (userInput[1] == "add")) {
         std::string assignmentName = userInput[2];
-        std::string priorityLevel = userInput[3];
+        int priorityLevel = 1;
+        try {
+            priorityLevel = std::stoi(userInput[3]);
+        }
+        catch (std::invalid_argument exception) {
+            std::cout << "Your priority level was invalid. Defaulting to 1.\n";
+        }
+        if(priorityLevel < 1 || priorityLevel > 5) {
+            std::cout << "Please make sure your priority level is between 1-5.\n";
+            this->gotoMainMenu();
+        }
+        std::string courseName = getCommandWithoutSlash(command);
+        bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel);
+        if(assignmentCreated) {
+            std::cout << "Created " << assignmentName << "! Now in " << courseName << " Course!\n";
+            std::cout << " * Priority: " << priorityLevel << std::endl;
+        }
+        else {
+            std::cout << "Unfortunately, the assignment could not be created!\n";
+        }
+        this->gotoMainMenu();
     }
     else if(command == "/today") {
        this->gotoDueTodayAssignmentsPage();

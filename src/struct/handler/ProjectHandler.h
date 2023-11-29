@@ -32,7 +32,7 @@ public:
     bool createCourse(std::string courseName);
     bool deleteCourse(std::string courseName);
 
-    bool createAssignment(std::string className, std::string assignmentName, std::string priorityLevel);
+    bool createAssignment(std::string className, std::string assignmentName, int priorityLevel);
 
     bool courseExists(std::string courseName);
 
