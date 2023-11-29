@@ -56,3 +56,6 @@ void Assignment::setPreparationDescription(std::string newPrepDescription) {
 void Assignment::setPriorityLevel(int priorityLevel) {
     this->priorityLevel = priorityLevel;
 }
+std::string Assignment::getDueDate() {
+    return date::format("%m-%d-%Y", this->dueDate);
+}

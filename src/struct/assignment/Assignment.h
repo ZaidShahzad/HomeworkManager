@@ -17,7 +17,9 @@ private:
    std::string description;
    int priorityLevel;
    std::string preparedDescription;
-    sys_days dueDate;
+   sys_days dueDate;
+
+
 
 public:
 
@@ -54,6 +56,9 @@ public:
    void setPreparationDescription(std::string newPrepDescription);
 
    void setPriorityLevel(int priorityLevel);
+
+   std::string getDueDate();
+
 
 };
 

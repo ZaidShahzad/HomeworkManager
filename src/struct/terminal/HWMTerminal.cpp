@@ -295,6 +295,8 @@ void HWMTerminal::gotoMainMenu() {
             return;
         }
 
+
+
         std::string courseName = userInput[1];
         bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel);
         if(assignmentCreated) {
