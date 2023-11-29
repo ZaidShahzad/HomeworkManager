@@ -149,6 +149,7 @@ void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
 
 // This function goes to the Due Today assignment page
 void HWMTerminal::gotoDueTodayAssignmentsPage() {
+    this->clearTerminal();
     this->setCurrentPage(DUE_TODAY_ASSIGNMENTS);
     this->printDueTodayAssignmentsPage();
 
@@ -170,6 +171,7 @@ void HWMTerminal::gotoDueTodayAssignmentsPage() {
 
 // This function goes to the All Assignments Page
 void HWMTerminal::gotoAllAssignmentsPage() {
+    this->clearTerminal();
     this->setCurrentPage(ALL_ASSIGNMENTS);
     this->printAllAssignmentsPage();
 
@@ -191,6 +193,7 @@ void HWMTerminal::gotoAllAssignmentsPage() {
 
 // This function goes to the Course Assignments Page
 void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
+    this->clearTerminal();
     if(!handler.courseExists(courseName)) {
         std::cout << "That course does not exist!\n";
         this->gotoMainMenu();
@@ -218,6 +221,7 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
 
 ///TODO -essam
 void HWMTerminal::gotoAutoTodoList() {
+    this->clearTerminal();
     this->setCurrentPage(AUTO_TODO_LIST);
     std::cout << "How many days in advance do you wish to start your work? [Enter a number]\n";
 
