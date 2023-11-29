@@ -4,17 +4,20 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "../utils/date.h"
+using namespace date;
 
 
 
 class Assignment {
 //Private member variables
-private: 
+private:
    std::string title;                 
    bool completed;                    
    std::string description;
    int priorityLevel;
    std::string preparedDescription;
+    sys_days dueDate;
 
 public:
 

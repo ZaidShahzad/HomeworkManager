@@ -3,6 +3,9 @@
 #include <algorithm>
 #include "../utils/Utils.h"
 #include <cstdlib>
+#include <sstream>
+#include <iomanip>
+#include "../utils/date.h"
 
 ProjectHandler handler = Utils::getInstance()->getProjectHandler();
 ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
@@ -28,6 +31,13 @@ void HWMTerminal::clearTerminal() {
 #else
     std::system("clear"); // For Unix/Linux/MacOS
 #endif
+}
+bool HWMTerminal::isValidDateFormat(std::string string) {
+    std::istringstream dateStream(string);
+    date::sys_days parsedData;
+    dateStream >> date::parse("%m-%d-%Y", parsedData);
+    return !dateStream.fail();
+
 }
 // This function will get a response from the user and return a vector as the user's response
 // EX: If the user typed "create Biology", it will return a vector like ["create", "Biology"]
@@ -89,19 +99,19 @@ void HWMTerminal::printMainMenu() {
     }
     std::cout << "\n";
     std::cout << "Create or Delete Course:\n";
-    std::cout << "  * /cc <className>                                             Create a course\n";
-    std::cout << "  * /dc <className>                                             Delete a Course\n";
+    std::cout << "  * /cc <className>                                                      Create a course\n";
+    std::cout << "  * /dc <className>                                                      Delete a Course\n";
     std::cout << "\n";
     std::cout << "Create Assignment for Course:\n";
-    std::cout << "  * /ca <courseName> <nameOfAssignment> <priorityLevel>         Add a assignment to a course\n";
+    std::cout << "  * /ca <courseName> <nameOfAssignment> <priorityLevel> <dueDate>        Add a assignment to a course\n";
     std::cout << "      - Due Date Example: 1-1-2023\n";
     std::cout << "      - Priority Level Example: 1 -> 5\n";
     std::cout << "\n";
     std::cout << "View Assignments\n";
-    std::cout << " * /today                                                       View what assignments are due today\n";
-    std::cout << " * /all                                                         View assignments of all courses\n";
-    std::cout << " * /view <courseName>                                           View assignments of a specific course\n";
-    std::cout << " * /todolist                                                    View Todo List\n";
+    std::cout << " * /today                                                                View what assignments are due today\n";
+    std::cout << " * /all                                                                  View assignments of all courses\n";
+    std::cout << " * /view <courseName>                                                    View assignments of a specific course\n";
+    std::cout << " * /todolist                                                             View Todo List\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
@@ -264,7 +274,7 @@ void HWMTerminal::gotoMainMenu() {
         }
         this->gotoMainMenu();
     }
-    else if(args == 4 && command == "/ca") {
+    else if(args == 5 && command == "/ca") {
         std::string assignmentName = userInput[2];
         int priorityLevel = 1;
         try {
@@ -276,7 +286,15 @@ void HWMTerminal::gotoMainMenu() {
         if(priorityLevel < 1 || priorityLevel > 5) {
             std::cout << "Please make sure your priority level is between 1-5.\n";
             this->gotoMainMenu();
+            return;
         }
+        std::string dueDate = userInput[4];
+        if(!this->isValidDateFormat(dueDate)){
+            std::cout << "Your due date was invalid.\n";
+            this->gotoMainMenu();
+            return;
+        }
+
         std::string courseName = userInput[1];
         bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel);
         if(assignmentCreated) {

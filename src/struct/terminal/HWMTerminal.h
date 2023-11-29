@@ -39,6 +39,7 @@ public:
     void gotoViewCourseAssignmentsPage(std::string courseName);
     void gotoAutoTodoList();
     void clearTerminal();
+    bool isValidDateFormat(std::string string);
 
 
     std::vector<std::string> getResponseFromUser();
