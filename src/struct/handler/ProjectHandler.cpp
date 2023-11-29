@@ -69,3 +69,11 @@ bool ProjectHandler::deleteCourse(std::string courseName) {
     return true;
 
 }
+
+bool ProjectHandler::createAssignment(std::string className, std::string assignmentName, std::string priorityLevel) {
+    Course* course = findCourseByName(className);
+
+    // Check if an assignment already exists (if it has the same name)
+    Assignment* assignment = new Assignment()
+
+}

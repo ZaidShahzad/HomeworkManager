@@ -33,6 +33,8 @@ public:
     bool createCourse(std::string courseName);
     bool deleteCourse(std::string courseName);
 
+    bool createAssignment(std::string className, std::string assignmentName, std::string priorityLevel);
+
     bool courseExists(std::string courseName);
     Course* findCourseByName(std::string courseName);
     int findCourseIndexInVectorByName(std::string courseName);

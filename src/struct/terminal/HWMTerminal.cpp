@@ -87,7 +87,7 @@ void HWMTerminal::printMainMenu() {
     std::cout << "  * /deletecourse (/dc) <className>                             Delete a Course\n";
     std::cout << "\n";
     std::cout << "Add Assignment To Course:\n";
-    std::cout << "  * /<courseName> add <name> <dueDate> <priorityLevel>          Add a assignment to a course\n";
+    std::cout << "  * /<courseName> add <name> <priorityLevel>          Add a assignment to a course\n";
     std::cout << "      - Due Date Example: 1-1-2023\n";
     std::cout << "      - Priority Level Example: ! -> !!!!!\n";
     std::cout << "\n";
@@ -254,7 +254,8 @@ void HWMTerminal::gotoMainMenu() {
         this->gotoMainMenu();
     }
     else if(handler.courseExists(getCommandWithoutSlash(command)) && (userInput[1] == "add")) {
-
+        std::string assignmentName = userInput[2];
+        std::string priorityLevel = userInput[3];
     }
     else if(command == "/today") {
        this->gotoDueTodayAssignmentsPage();
