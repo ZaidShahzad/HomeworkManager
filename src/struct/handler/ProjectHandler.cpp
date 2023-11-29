@@ -7,6 +7,13 @@ ProjectInfo ProjectHandler::getProjectInfo() {
     return this->projectInfo;
 }
 
+std::string ProjectHandler::toLowerCase(std::string string) {
+    for(int i = 0; i < string.length(); i++) {
+        string[i] = tolower(string[i]);
+    }
+    return string;
+}
+
 HWMTerminal ProjectHandler::getTerminal() {
     return this->terminal;
 }
@@ -18,7 +25,7 @@ std::vector<Course*>& ProjectHandler::getCourses() {
 // This function will check if a course exists (if does, returns true, if not, returns false)
 bool ProjectHandler::courseExists(std::string courseName) {
     for(Course* course : this->getCourses()) {
-        if(course->getCourseName() == courseName) return true;
+        if(toLowerCase(course->getCourseName()) == toLowerCase(courseName)) return true;
     }
     return false;
 }
@@ -26,7 +33,7 @@ bool ProjectHandler::courseExists(std::string courseName) {
 // This function will return a course if it's found by the name passed it, if not, it will return nullptr
 Course *ProjectHandler::findCourseByName(std::string courseName) {
     for(Course* course : this->getCourses()) {
-        if(course->getCourseName() == courseName) return course;
+        if(toLowerCase(course->getCourseName()) == toLowerCase(courseName)) return course;
     }
     return nullptr;
 }
@@ -35,7 +42,7 @@ Course *ProjectHandler::findCourseByName(std::string courseName) {
 int ProjectHandler::findCourseIndexInVectorByName(std::string courseName) {
     int index = 0;
     for(Course* course : this->getCourses()) {
-        if(course->getCourseName() == courseName) return index;
+        if(toLowerCase(course->getCourseName()) == toLowerCase(courseName)) return index;
         index++;
     }
     return -1;

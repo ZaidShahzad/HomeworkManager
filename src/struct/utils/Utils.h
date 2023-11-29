@@ -22,7 +22,6 @@ public:
     static Utils* getInstance();
 
     ProjectHandler getProjectHandler();
-
 };
 
 

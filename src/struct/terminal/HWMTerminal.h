@@ -22,6 +22,7 @@ class HWMTerminal {
 
 private:
     Page currentPage;
+    std::string getCommandWithoutSlash(std::string command);
 
 public:
     HWMTerminal();

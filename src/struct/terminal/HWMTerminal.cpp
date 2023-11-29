@@ -1,5 +1,6 @@
 #include "HWMTerminal.h"
 #include <iostream>
+#include <algorithm>
 #include "../utils/Utils.h"
 
 ProjectHandler handler = Utils::getInstance()->getProjectHandler();
@@ -12,6 +13,11 @@ HWMTerminal::HWMTerminal() {
 // This will return the page the user is on
 Page HWMTerminal::getCurrentPage() {
     return this->currentPage;
+}
+
+std::string HWMTerminal::getCommandWithoutSlash(std::string command) {
+    command.erase(remove(command.begin(), command.end(), '/'), command.end());
+    return command;
 }
 
 // This will allow you to set the page the user is on
@@ -77,14 +83,19 @@ void HWMTerminal::printMainMenu() {
     }
     std::cout << "\n";
     std::cout << "Create or Delete Course:\n";
-    std::cout << "  * /createcourse (/cc) <className>          Create a course\n";
-    std::cout << "  * /deletecourse (/dc) <className>          Delete a Course\n";
+    std::cout << "  * /createcourse (/cc) <className>                             Create a course\n";
+    std::cout << "  * /deletecourse (/dc) <className>                             Delete a Course\n";
+    std::cout << "\n";
+    std::cout << "Add Assignment To Course:\n";
+    std::cout << "  * /<courseName> add <name> <dueDate> <priorityLevel>          Add a assignment to a course\n";
+    std::cout << "      - Due Date Example: 1-1-2023\n";
+    std::cout << "      - Priority Level Example: ! -> !!!!!\n";
     std::cout << "\n";
     std::cout << "View Assignments\n";
-    std::cout << " * /today                              View what assignments are due today\n";
-    std::cout << " * /all                                View assignments of all courses\n";
-    std::cout << " * /view <courseName>                  View assignments of a specific course\n";
-    std::cout << " * /todolist                           View Todo List\n";
+    std::cout << " * /today                                                       View what assignments are due today\n";
+    std::cout << " * /all                                                         View assignments of all courses\n";
+    std::cout << " * /view <courseName>                                           View assignments of a specific course\n";
+    std::cout << " * /todolist                                                    View Todo List\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
@@ -242,6 +253,9 @@ void HWMTerminal::gotoMainMenu() {
         }
         this->gotoMainMenu();
     }
+    else if(handler.courseExists(getCommandWithoutSlash(command)) && (userInput[1] == "add")) {
+
+    }
     else if(command == "/today") {
        this->gotoDueTodayAssignmentsPage();
     }
@@ -257,7 +271,7 @@ void HWMTerminal::gotoMainMenu() {
     }
     // Invalid args check
     else {
-        std::cout << "Invalid Args, try '/createcourse', '/deletecourse', '/today', '/all', '/view'.\n";
+        std::cout << "Invalid Args, you have typed a command incorrectly.\n";
         this->gotoMainMenu();
         return;
     }

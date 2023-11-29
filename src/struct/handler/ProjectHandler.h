@@ -21,6 +21,7 @@ private:
     HWMTerminal terminal;
 
     std::vector<Course*> courses;
+    std::string toLowerCase(std::string string);
 
 
 public:
