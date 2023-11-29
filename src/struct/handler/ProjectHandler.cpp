@@ -17,6 +17,14 @@ std::vector<Course*>& ProjectHandler::getCourses() {
     return this->courses;
 }
 
+bool ProjectHandler::isValidDateFormat(std::string string) {
+    std::istringstream dateStream(string);
+    date::sys_days parsedData;
+    dateStream >> date::parse("%m-%d-%Y", parsedData);
+    return !dateStream.fail();
+
+}
+
 // This function will check if a course exists (if does, returns true, if not, returns false)
 bool ProjectHandler::courseExists(std::string courseName) {
     for(Course* course : this->getCourses()) {
@@ -65,13 +73,21 @@ bool ProjectHandler::deleteCourse(std::string courseName) {
 
 }
 
-bool ProjectHandler::createAssignment(std::string className, std::string assignmentName, int priorityLevel) {
+bool ProjectHandler::createAssignment(std::string className, std::string assignmentName, int priorityLevel, std::string dueDate) {
     Course* course = findCourseByName(className);
 
     // Check if an assignment already exists (check's by name)
     if(course->assignmentExists(assignmentName)) return false;
 
     Assignment* assignment = new Assignment(assignmentName);
+
+    if(!this->isValidDateFormat(dueDate)){
+        std::cout << "Your due date was invalid.\n";
+        return false;
+    }
+
+
+
     assignment->setPriorityLevel(priorityLevel);
     course->getAssignments().push_back(assignment);
     return true;

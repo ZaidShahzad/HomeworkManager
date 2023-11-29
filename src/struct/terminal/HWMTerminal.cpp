@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <sstream>
 #include <iomanip>
-#include "../utils/date.h"
 
 ProjectHandler handler = Utils::getInstance()->getProjectHandler();
 ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
@@ -32,13 +31,7 @@ void HWMTerminal::clearTerminal() {
     std::system("clear"); // For Unix/Linux/MacOS
 #endif
 }
-bool HWMTerminal::isValidDateFormat(std::string string) {
-    std::istringstream dateStream(string);
-    date::sys_days parsedData;
-    dateStream >> date::parse("%m-%d-%Y", parsedData);
-    return !dateStream.fail();
 
-}
 // This function will get a response from the user and return a vector as the user's response
 // EX: If the user typed "create Biology", it will return a vector like ["create", "Biology"]
 std::vector<std::string> HWMTerminal::getResponseFromUser() {
@@ -289,16 +282,9 @@ void HWMTerminal::gotoMainMenu() {
             return;
         }
         std::string dueDate = userInput[4];
-        if(!this->isValidDateFormat(dueDate)){
-            std::cout << "Your due date was invalid.\n";
-            this->gotoMainMenu();
-            return;
-        }
-
-
 
         std::string courseName = userInput[1];
-        bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel);
+        bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel,dueDate);
         if(assignmentCreated) {
             std::cout << "Created " << assignmentName << "! Now in " << courseName << " Course!\n";
             std::cout << " * Priority: " << priorityLevel << std::endl;

@@ -5,7 +5,8 @@
 #include "../projectInfo/ProjectInfo.h"
 #include "../assignment/Assignment.h"
 #include "../course/Course.h"
-
+#include "../utils/date.h"
+using namespace date;
 #include <vector>
 
 
@@ -32,12 +33,13 @@ public:
     bool createCourse(std::string courseName);
     bool deleteCourse(std::string courseName);
 
-    bool createAssignment(std::string className, std::string assignmentName, int priorityLevel);
+    bool createAssignment(std::string className, std::string assignmentName, int priorityLevel, std::string dueDate);
 
     bool courseExists(std::string courseName);
 
     Course* findCourseByName(std::string courseName);
     int findCourseIndexInVectorByName(std::string courseName);
+    bool isValidDateFormat(std::string string);
 
 };
 
