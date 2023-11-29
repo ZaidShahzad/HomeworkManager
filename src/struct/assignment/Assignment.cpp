@@ -1,5 +1,13 @@
 #include "Assignment.h"
 
+Assignment::Assignment(std::string title) {
+    this->title = title;
+    this->completed = false;
+    this->description = "";
+    this->priorityLevel = 1;
+    this->preparedDescription = "";
+}
+
 // Getter for title
 std::string Assignment::getTitle() {
     return this->title;

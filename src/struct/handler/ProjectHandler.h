@@ -21,7 +21,6 @@ private:
     HWMTerminal terminal;
 
     std::vector<Course*> courses;
-    std::string toLowerCase(std::string string);
 
 
 public:
@@ -36,6 +35,7 @@ public:
     bool createAssignment(std::string className, std::string assignmentName, std::string priorityLevel);
 
     bool courseExists(std::string courseName);
+
     Course* findCourseByName(std::string courseName);
     int findCourseIndexInVectorByName(std::string courseName);
 

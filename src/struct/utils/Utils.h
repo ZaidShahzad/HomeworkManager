@@ -23,6 +23,7 @@ public:
     static Utils* getInstance();
 
     ProjectHandler getProjectHandler();
+    std::string toLowerCase(std::string string);
 
 };
 

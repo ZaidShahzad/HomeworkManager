@@ -17,6 +17,10 @@ private:
    std::string preparedDescription;
 
 public:
+
+// Constructor
+   Assignment(std::string title);
+
 //Public member functions for accessing and modifying private members
 
 //Getters for the title

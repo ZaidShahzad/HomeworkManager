@@ -23,6 +23,9 @@ public:
     //setter for courseName
     void setCourseName(std::string name);
 
+    // Check if a assignment exists (by it's name)
+    bool assignmentExists(std::string assignmentName);
+
     //getter for assignments
     std::vector<Assignment*>& getAssignments();
 

@@ -1,17 +1,12 @@
 #include "ProjectHandler.h"
 #include "../course/Course.h"
+#include "../assignment/Assignment.h"
+#include "../utils/Utils.h"
 
 ProjectHandler::ProjectHandler() {}
 
 ProjectInfo ProjectHandler::getProjectInfo() {
     return this->projectInfo;
-}
-
-std::string ProjectHandler::toLowerCase(std::string string) {
-    for(int i = 0; i < string.length(); i++) {
-        string[i] = tolower(string[i]);
-    }
-    return string;
 }
 
 HWMTerminal ProjectHandler::getTerminal() {
@@ -25,7 +20,7 @@ std::vector<Course*>& ProjectHandler::getCourses() {
 // This function will check if a course exists (if does, returns true, if not, returns false)
 bool ProjectHandler::courseExists(std::string courseName) {
     for(Course* course : this->getCourses()) {
-        if(toLowerCase(course->getCourseName()) == toLowerCase(courseName)) return true;
+        if(Utils::getInstance()->toLowerCase(course->getCourseName()) == Utils::getInstance()->toLowerCase((courseName))) return true;
     }
     return false;
 }
@@ -33,7 +28,7 @@ bool ProjectHandler::courseExists(std::string courseName) {
 // This function will return a course if it's found by the name passed it, if not, it will return nullptr
 Course *ProjectHandler::findCourseByName(std::string courseName) {
     for(Course* course : this->getCourses()) {
-        if(toLowerCase(course->getCourseName()) == toLowerCase(courseName)) return course;
+        if(Utils::getInstance()->toLowerCase((course->getCourseName())) == Utils::getInstance()->toLowerCase((courseName))) return course;
     }
     return nullptr;
 }
@@ -42,7 +37,7 @@ Course *ProjectHandler::findCourseByName(std::string courseName) {
 int ProjectHandler::findCourseIndexInVectorByName(std::string courseName) {
     int index = 0;
     for(Course* course : this->getCourses()) {
-        if(toLowerCase(course->getCourseName()) == toLowerCase(courseName)) return index;
+        if(Utils::getInstance()->toLowerCase((course->getCourseName())) == Utils::getInstance()->toLowerCase((courseName))) return index;
         index++;
     }
     return -1;
@@ -73,7 +68,10 @@ bool ProjectHandler::deleteCourse(std::string courseName) {
 bool ProjectHandler::createAssignment(std::string className, std::string assignmentName, std::string priorityLevel) {
     Course* course = findCourseByName(className);
 
-    // Check if an assignment already exists (if it has the same name)
-    Assignment* assignment = new Assignment()
+    // Check if an assignment already exists (check's by name)
+    if(course->assignmentExists(assignmentName)) return false;
 
+    Assignment* assignment = new Assignment(assignmentName);
+    course->getAssignments().push_back(assignment);
+    return true;
 }
