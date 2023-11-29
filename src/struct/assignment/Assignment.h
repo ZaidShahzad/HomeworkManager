@@ -57,8 +57,8 @@ public:
 
    void setPriorityLevel(int priorityLevel);
 
-   std::string getDueDate();
-
+   std::string getFormattedDueDate();
+   void setDueDate(sys_days dueDate);
 
 
 };

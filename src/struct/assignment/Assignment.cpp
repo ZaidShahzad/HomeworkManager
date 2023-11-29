@@ -57,6 +57,10 @@ void Assignment::setPriorityLevel(int priorityLevel) {
     this->priorityLevel = priorityLevel;
 }
 
-std::string Assignment::getDueDate() {
+std::string Assignment::getFormattedDueDate() {
     return date::format("%m-%d-%Y", this->dueDate);
+}
+
+void Assignment::setDueDate(sys_days dueDate) {
+    this->dueDate = dueDate;
 }

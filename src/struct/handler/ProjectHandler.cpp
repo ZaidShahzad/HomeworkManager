@@ -79,14 +79,17 @@ bool ProjectHandler::createAssignment(std::string className, std::string assignm
     // Check if an assignment already exists (check's by name)
     if(course->assignmentExists(assignmentName)) return false;
 
-    Assignment* assignment = new Assignment(assignmentName);
-
     if(!this->isValidDateFormat(dueDate)){
         std::cout << "Your due date was invalid.\n";
         return false;
     }
 
+    Assignment* assignment = new Assignment(assignmentName);
 
+    sys_days sysDueDate;
+    std::istringstream dateStream(dueDate);
+    dateStream >> date::parse("%m-%d-%Y", sysDueDate);
+    assignment->setDueDate(sysDueDate);
 
     assignment->setPriorityLevel(priorityLevel);
     course->getAssignments().push_back(assignment);
