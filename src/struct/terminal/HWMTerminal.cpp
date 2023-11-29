@@ -72,6 +72,7 @@ void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
     else {
         for(Assignment* assignment : courseFound->getAssignments()) {
             std::cout << " * " << assignment->getTitle() << "\n";
+            std::cout << "   - Due Date: " << assignment->getFormattedDueDate() << std::endl;
             std::cout << "   - Priority Level: " << assignment->getPriorityLevel() << std::endl;
         }
     }
@@ -287,6 +288,7 @@ void HWMTerminal::gotoMainMenu() {
         bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel,dueDate);
         if(assignmentCreated) {
             std::cout << "Created " << assignmentName << "! Now in " << courseName << " Course!\n";
+            std::cout << " * Due Date: " << dueDate << std::endl;
             std::cout << " * Priority: " << priorityLevel << std::endl;
         }
         else {
