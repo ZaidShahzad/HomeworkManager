@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <iomanip>
+#include <unistd.h>
 
 ProjectHandler handler = Utils::getInstance()->getProjectHandler();
 ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
@@ -27,8 +28,10 @@ void HWMTerminal::setCurrentPage(Page page) {
 void HWMTerminal::clearTerminal() {
 #ifdef _WIN32
     std::system("cls"); // For Windows
+    usleep(10000);
 #else
     std::system("clear"); // For Unix/Linux/MacOS
+    usleep(10000);
 #endif
 }
 
