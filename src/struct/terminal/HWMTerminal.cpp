@@ -26,13 +26,13 @@ void HWMTerminal::setCurrentPage(Page page) {
 }
 
 void HWMTerminal::clearTerminal() {
-#ifdef _WIN32
-    std::system("cls"); // For Windows
-    usleep(10000);
-#else
-    std::system("clear"); // For Unix/Linux/MacOS
-    usleep(10000);
-#endif
+//#ifdef _WIN32
+//    std::system("cls"); // For Windows
+//    usleep(10000);
+//#else
+//    std::system("clear"); // For Unix/Linux/MacOS
+//    usleep(10000);
+//#endif
 }
 
 // This function will get a response from the user and return a vector as the user's response
