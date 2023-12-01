@@ -100,14 +100,14 @@ void HWMTerminal::printMainMenu() {
     std::cout << "  * /dc <className>                                                      Delete a Course\n";
     std::cout << "\n";
     std::cout << "Create Assignment for Course:\n";
-    std::cout << "  * /ca <courseName> <nameOfAssignment> <priorityLevel> <dueDate>        Add a assignment to a course\n";
+    std::cout << "  * /ca <className> <nameOfAssignment> <priorityLevel> <dueDate>        Add a assignment to a course\n";
     std::cout << "      - Due Date Example: 1-1-2023\n";
     std::cout << "      - Priority Level Example: 1 -> 5\n";
     std::cout << "\n";
     std::cout << "View Assignments\n";
     std::cout << " * /today                                                                View what assignments are due today\n";
     std::cout << " * /all                                                                  View assignments of all courses\n";
-    std::cout << " * /view <courseName>                                                    View assignments of a specific course\n";
+    std::cout << " * /view <className>                                                    View assignments of a specific course\n";
     std::cout << " * /todolist                                                             View Todo List\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
