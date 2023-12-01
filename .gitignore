@@ -5,3 +5,6 @@ src/.idea/
 
 # Ignoring macOS executable files
 *.app
+
+# other
+.DS_Store
