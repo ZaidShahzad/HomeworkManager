@@ -29,6 +29,8 @@ public:
 
 // Constructor
     Assignment(std::string title, std::string parentCourse);
+// Copy constructor
+    Assignment(Assignment* assignmentToCopyFrom);
 
 //Public member functions for accessing and modifying private members
 
@@ -37,12 +39,6 @@ public:
 
 //setter for the title
     void setTitle(std::string newTitle);
-
-//getter for the completion status
-    bool isCompleted();
-
-//setter for the completion status
-    void setCompleted(bool isCompleted);
 
 //getter for the description
     std::string getDescription();

@@ -12,6 +12,16 @@ Assignment::Assignment(std::string title, std::string parentCourse) {
     this->assignmentID = parentCourse + "-" + title;
 }
 
+Assignment::Assignment(Assignment* assignmentToCopyFrom) {
+    this->title = assignmentToCopyFrom->title;
+    this->parentCourseName = assignmentToCopyFrom->parentCourseName;
+    this->completed = assignmentToCopyFrom->completed;
+    this->description = assignmentToCopyFrom->description;
+    this->priorityLevel = assignmentToCopyFrom->priorityLevel;
+    this->preparedDescription = assignmentToCopyFrom->preparedDescription;
+    this->assignmentID = assignmentToCopyFrom->assignmentID;
+}
+
 // Getter for title
 std::string Assignment::getTitle() {
     return this->title;
@@ -21,17 +31,6 @@ std::string Assignment::getTitle() {
 void Assignment::setTitle(std::string newTitle) {
     this->title = newTitle;
 }
-
-// Getter for completed
-bool Assignment::isCompleted() {
-    return this->completed;
-}
-
-// Setter for completed
-void Assignment::setCompleted(bool isCompleted) {
-    this->completed = isCompleted;
-}
-
 // Getter for description
 std::string Assignment::getDescription() {
     return this->description;

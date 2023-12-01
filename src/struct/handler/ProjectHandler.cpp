@@ -17,6 +17,10 @@ std::vector<Course*>& ProjectHandler::getCourses() {
     return this->courses;
 }
 
+std::vector<Assignment*>& ProjectHandler::getCompletedAssignmentsHistory() {
+    return this->completedAssignmentsHistory;
+}
+
 bool ProjectHandler::isValidDateFormat(std::string string) {
     std::istringstream dateStream(string);
     date::sys_days parsedData;
@@ -88,7 +92,9 @@ bool ProjectHandler::deleteCourse(std::string courseName) {
     int foundCourseIndex = this->findCourseIndexInVectorByName(courseName);
     if(foundCourseIndex == -1) return false;
 
+    Course* course = this->findCourseByName(courseName);
     this->getCourses().erase(this->getCourses().begin() + foundCourseIndex);
+    delete course;
     return true;
 
 }
@@ -127,5 +133,19 @@ bool ProjectHandler::deleteAssignment(std::string assignmentID) {
     if(foundAssignmentIndex == -1) return false;
 
     course->getAssignments().erase(course->getAssignments().begin() + foundAssignmentIndex);
+    delete assignment;
+    return true;
+}
+
+bool ProjectHandler::completeAssignment(std::string assignmentID) {
+    Assignment* assignment = this->findAssignmentByID(assignmentID);
+    if(assignment == nullptr) {
+        std::cout << "That assignment ID was invalid!\n";
+        return false;
+    }
+    Assignment* completedAssignment = new Assignment(assignment);
+    this->getCompletedAssignmentsHistory().push_back(completedAssignment);
+
+    this->deleteAssignment(assignmentID);
     return true;
 }

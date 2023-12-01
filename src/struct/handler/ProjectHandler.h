@@ -22,6 +22,7 @@ private:
     HWMTerminal terminal;
 
     std::vector<Course*> courses;
+    std::vector<Assignment*> completedAssignmentsHistory;
 
 
 public:
@@ -30,6 +31,7 @@ public:
     HWMTerminal getTerminal();
 
     std::vector<Course*>& getCourses();
+    std::vector<Assignment*>& getCompletedAssignmentsHistory();
     bool createCourse(std::string courseName);
     bool deleteCourse(std::string courseName);
 
@@ -37,6 +39,7 @@ public:
     bool deleteAssignment(std::string assignmentID);
 
     bool courseExists(std::string courseName);
+    bool completeAssignment(std::string assignmentID);
 
     Course* findCourseByName(std::string courseName);
     Assignment* findAssignmentByID(std::string id);
