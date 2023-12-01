@@ -7,6 +7,7 @@
 #include "../utils/date.h"
 #include <chrono> // to calculate remaining time until assignment is due
 using namespace date;
+using namespace std::chrono;
 
 
 
@@ -62,7 +63,7 @@ public:
     void setDueDate(sys_days dueDate);
 
 // getter for time left until due date
-    std::string getTimeLeft() const;
+    std::string getTimeLeft();
 };
 
 #endif 

@@ -67,9 +67,7 @@ void Assignment::setDueDate(sys_days dueDate) {
     this->dueDate = dueDate;
 }
 
-std::string Assignment::getTimeLeft() const {
-    using namespace std::chrono;
-    using namespace date;
+std::string Assignment::getTimeLeft() {
 
     // Get the current time and date
     auto now = system_clock::now();
