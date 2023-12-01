@@ -84,7 +84,7 @@ bool ProjectHandler::createAssignment(std::string className, std::string assignm
         return false;
     }
 
-    Assignment* assignment = new Assignment(assignmentName);
+    Assignment* assignment = new Assignment(assignmentName, course->getCourseName());
 
     sys_days sysDueDate;
     std::istringstream dateStream(dueDate);

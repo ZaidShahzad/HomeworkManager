@@ -2,12 +2,14 @@
 #include <chrono>
 #include <sstream>
 
-Assignment::Assignment(std::string title) {
+Assignment::Assignment(std::string title, std::string parentCourse) {
     this->title = title;
+    this->parentCourse = parentCourse;
     this->completed = false;
     this->description = "";
     this->priorityLevel = 1;
     this->preparedDescription = "";
+    this->assignmentID = parentCourse + "-" + title;
 }
 
 // Getter for title
@@ -65,6 +67,10 @@ std::string Assignment::getFormattedDueDate() {
 
 void Assignment::setDueDate(sys_days dueDate) {
     this->dueDate = dueDate;
+}
+
+std::string Assignment::getAssignmentID() {
+    return this->assignmentID;
 }
 
 std::string Assignment::getTimeLeft() {

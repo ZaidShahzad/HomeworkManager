@@ -20,13 +20,15 @@ private:
     int priorityLevel;
     std::string preparedDescription;
     sys_days dueDate;
+    std::string parentCourse;
+    std::string assignmentID;
 
 
 
 public:
 
 // Constructor
-    Assignment(std::string title);
+    Assignment(std::string title, std::string parentCourse);
 
 //Public member functions for accessing and modifying private members
 
@@ -64,6 +66,7 @@ public:
 
 // getter for time left until due date
     std::string getTimeLeft();
+    std::string getAssignmentID();
 };
 
 #endif 

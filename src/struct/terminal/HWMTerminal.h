@@ -22,6 +22,7 @@ class HWMTerminal {
 
 private:
     Page currentPage;
+    std::string courseNameFromViewCoursePage;
 
 public:
     HWMTerminal();
@@ -39,12 +40,17 @@ public:
     void gotoViewCourseAssignmentsPage(std::string courseName);
     void gotoAutoTodoList();
     void clearTerminal();
+    void handleCommands();
+    void refreshPage();
 
 
     std::vector<std::string> getResponseFromUser();
 
     Page getCurrentPage();
     void setCurrentPage(Page page);
+
+    void setCourseNameFromViewCoursePage(std::string courseName);
+    std::string getCourseNameFromViewCoursePage();
 
 
 };

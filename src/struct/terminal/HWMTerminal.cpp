@@ -25,6 +25,14 @@ void HWMTerminal::setCurrentPage(Page page) {
     this->currentPage = page;
 }
 
+void HWMTerminal::setCourseNameFromViewCoursePage(std::string courseName) {
+    this->courseNameFromViewCoursePage = courseName;
+}
+
+std::string HWMTerminal::getCourseNameFromViewCoursePage() {
+    return this->courseNameFromViewCoursePage;
+}
+
 void HWMTerminal::clearTerminal() {
 //#ifdef _WIN32
 //    std::system("cls"); // For Windows
@@ -76,9 +84,11 @@ void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
             std::cout << " * " << assignment->getTitle() << "\n"
                       << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
                       << assignment->getTimeLeft() << ")\n"
-                      << "   - Priority Level: " << assignment->getPriorityLevel() << "\n";
+                      << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
+                      << "   - Delete?: Type /d " << assignment->getAssignmentID() << "\n";
         }
     }
+    std::cout << "\n";
 }
 // This function will print the main menu (first page you land on when program starts)
 void HWMTerminal::printMainMenu() {
@@ -151,27 +161,33 @@ void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
     std::cout << "\n";
 }
 
+void HWMTerminal::refreshPage() {
+    switch(this->getCurrentPage()) {
+        case MAIN_MENU:
+            this->gotoMainMenu();
+            break;
+        case ALL_ASSIGNMENTS:
+            this->gotoAllAssignmentsPage();
+            break;
+        case DUE_TODAY_ASSIGNMENTS:
+            this->gotoDueTodayAssignmentsPage();
+            break;
+        case AUTO_TODO_LIST:
+            this->gotoAutoTodoList();
+            break;
+        case VIEW_COURSE_ASSIGNMENTS:
+            this->gotoViewCourseAssignmentsPage(this->getCourseNameFromViewCoursePage());
+            break;
+    }
+}
+
 
 // This function goes to the Due Today assignment page
 void HWMTerminal::gotoDueTodayAssignmentsPage() {
     this->clearTerminal();
     this->setCurrentPage(DUE_TODAY_ASSIGNMENTS);
     this->printDueTodayAssignmentsPage();
-
-    std::vector<std::string> userInput = getResponseFromUser();
-    std::string command = userInput[0];
-
-    // Send them to main if they type in /main
-    if(command == "/main") {
-        this->gotoMainMenu();
-        return;
-    }
-        // Invalid args check
-    else {
-        std::cout << "Invalid Args, try '/main'.\n";
-        this->gotoDueTodayAssignmentsPage();
-        return;
-    }
+    this->handleCommands();
 }
 
 // This function goes to the All Assignments Page
@@ -179,21 +195,7 @@ void HWMTerminal::gotoAllAssignmentsPage() {
     this->clearTerminal();
     this->setCurrentPage(ALL_ASSIGNMENTS);
     this->printAllAssignmentsPage();
-
-    std::vector<std::string> userInput = getResponseFromUser();
-    std::string command = userInput[0];
-
-    // Send them to main if they type in /main
-    if(command == "/main") {
-        this->gotoMainMenu();
-        return;
-    }
-        // Invalid args check
-    else {
-        std::cout << "Invalid Args, try '/main'.\n";
-        this->gotoDueTodayAssignmentsPage();
-        return;
-    }
+    this->handleCommands();
 }
 
 // This function goes to the Course Assignments Page
@@ -206,22 +208,9 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
     }
 
     this->setCurrentPage(VIEW_COURSE_ASSIGNMENTS);
+    this->setCourseNameFromViewCoursePage(courseName);
     this->printViewCourseAssignmentsPage(courseName);
-
-    std::vector<std::string> userInput = getResponseFromUser();
-    std::string command = userInput[0];
-
-    // Send them to main if they type in /main
-    if(command == "/main") {
-        this->gotoMainMenu();
-        return;
-    }
-        // Invalid args check
-    else {
-        std::cout << "Invalid Args, try '/main'.\n";
-        this->gotoDueTodayAssignmentsPage();
-        return;
-    }
+    this->handleCommands();
 }
 
 ///TODO -essam
@@ -239,7 +228,10 @@ void HWMTerminal::gotoMainMenu() {
     this->clearTerminal();
     this->setCurrentPage(MAIN_MENU);
     this->printMainMenu();
+    this->handleCommands();
+}
 
+void HWMTerminal::handleCommands() {
     std::vector<std::string> userInput = getResponseFromUser();
     std::string command = userInput[0];
     int args = userInput.size();
@@ -255,7 +247,7 @@ void HWMTerminal::gotoMainMenu() {
         else {
             std::cout << "Unfortunately, that course could not be created!\n";
         }
-        this->gotoMainMenu();
+        this->refreshPage();
     }
     else if(args == 2 && command == "/dc") {
         std::string className = userInput[1];
@@ -267,7 +259,7 @@ void HWMTerminal::gotoMainMenu() {
         else {
             std::cout << "Unfortunately, that course could not be deleted!\n";
         }
-        this->gotoMainMenu();
+        this->refreshPage();
     }
     else if(args == 5 && command == "/ca") {
         std::string assignmentName = userInput[2];
@@ -280,7 +272,7 @@ void HWMTerminal::gotoMainMenu() {
         }
         if(priorityLevel < 1 || priorityLevel > 5) {
             std::cout << "Please make sure your priority level is between 1-5.\n";
-            this->gotoMainMenu();
+            this->refreshPage();
             return;
         }
         std::string dueDate = userInput[4];
@@ -295,7 +287,7 @@ void HWMTerminal::gotoMainMenu() {
         else {
             std::cout << "Unfortunately, the assignment could not be created!\n";
         }
-        this->gotoMainMenu();
+        this->refreshPage();
     }
     else if(args == 1 && command == "/today") {
         this->gotoDueTodayAssignmentsPage();
@@ -310,11 +302,13 @@ void HWMTerminal::gotoMainMenu() {
     else if(args == 1 && command == "/todolist") {
         this->gotoAutoTodoList();
     }
+    else if(args == 1 && command == "/main") {
+        this->gotoMainMenu();
+    }
         // Invalid args check
     else {
         std::cout << "Invalid Args, you have typed a command incorrectly.\n";
-        this->gotoMainMenu();
+        this->refreshPage();
         return;
     }
 }
-
