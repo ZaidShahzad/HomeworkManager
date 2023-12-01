@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "../utils/date.h"
+#include <chrono> // to calculate remaining time until assignment is due
 using namespace date;
 
 
@@ -60,7 +61,8 @@ public:
     std::string getFormattedDueDate();
     void setDueDate(sys_days dueDate);
 
-
+// getter for time left until due date
+    std::string getTimeLeft() const;
 };
 
 #endif 

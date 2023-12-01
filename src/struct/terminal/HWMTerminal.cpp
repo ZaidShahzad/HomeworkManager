@@ -68,20 +68,18 @@ void HWMTerminal::printCourses() {
 void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
     Course* courseFound = handler.findCourseByName(courseName);
 
-    std::cout << courseFound->getCourseName() << "'s Assignment:\n";
+    std::cout << courseFound->getCourseName() << "'s Assignments:\n";
     if(courseFound->getAssignments().empty()) {
         std::cout << " * There are no assignments for this class :)\n";
-    }
-    else {
-        for(Assignment* assignment : courseFound->getAssignments()) {
-            std::cout << " * " << assignment->getTitle() << "\n";
-            std::cout << "   - Due Date: " << assignment->getFormattedDueDate() << std::endl;
-            std::cout << "   - Priority Level: " << assignment->getPriorityLevel() << std::endl;
+    } else {
+        for(const auto& assignment : courseFound->getAssignments()) {
+            std::cout << " * " << assignment->getTitle() << "\n"
+                      << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
+                      << assignment->getTimeLeft() << ")\n"
+                      << "   - Priority Level: " << assignment->getPriorityLevel() << "\n";
         }
     }
-    std::cout << std::endl;
 }
-
 // This function will print the main menu (first page you land on when program starts)
 void HWMTerminal::printMainMenu() {
     std::cout << "\n";
