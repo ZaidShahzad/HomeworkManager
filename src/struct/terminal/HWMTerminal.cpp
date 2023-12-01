@@ -68,20 +68,18 @@ void HWMTerminal::printCourses() {
 void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
     Course* courseFound = handler.findCourseByName(courseName);
 
-    std::cout << courseFound->getCourseName() << "'s Assignment:\n";
+    std::cout << courseFound->getCourseName() << "'s Assignments:\n";
     if(courseFound->getAssignments().empty()) {
         std::cout << " * There are no assignments for this class :)\n";
-    }
-    else {
-        for(Assignment* assignment : courseFound->getAssignments()) {
-            std::cout << " * " << assignment->getTitle() << "\n";
-            std::cout << "   - Due Date: " << assignment->getFormattedDueDate() << std::endl;
-            std::cout << "   - Priority Level: " << assignment->getPriorityLevel() << std::endl;
+    } else {
+        for(const auto& assignment : courseFound->getAssignments()) {
+            std::cout << " * " << assignment->getTitle() << "\n"
+                      << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
+                      << assignment->getTimeLeft() << ")\n"
+                      << "   - Priority Level: " << assignment->getPriorityLevel() << "\n";
         }
     }
-    std::cout << std::endl;
 }
-
 // This function will print the main menu (first page you land on when program starts)
 void HWMTerminal::printMainMenu() {
     std::cout << "\n";
@@ -168,7 +166,7 @@ void HWMTerminal::gotoDueTodayAssignmentsPage() {
         this->gotoMainMenu();
         return;
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, try '/main'.\n";
         this->gotoDueTodayAssignmentsPage();
@@ -190,7 +188,7 @@ void HWMTerminal::gotoAllAssignmentsPage() {
         this->gotoMainMenu();
         return;
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, try '/main'.\n";
         this->gotoDueTodayAssignmentsPage();
@@ -218,7 +216,7 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
         this->gotoMainMenu();
         return;
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, try '/main'.\n";
         this->gotoDueTodayAssignmentsPage();
@@ -300,7 +298,7 @@ void HWMTerminal::gotoMainMenu() {
         this->gotoMainMenu();
     }
     else if(args == 1 && command == "/today") {
-       this->gotoDueTodayAssignmentsPage();
+        this->gotoDueTodayAssignmentsPage();
     }
     else if(args == 1 && command == "/all") {
         this->gotoAllAssignmentsPage();
@@ -312,12 +310,11 @@ void HWMTerminal::gotoMainMenu() {
     else if(args == 1 && command == "/todolist") {
         this->gotoAutoTodoList();
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, you have typed a command incorrectly.\n";
         this->gotoMainMenu();
         return;
     }
 }
-
 

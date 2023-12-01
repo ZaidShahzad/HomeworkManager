@@ -39,7 +39,7 @@ public:
     void gotoViewCourseAssignmentsPage(std::string courseName);
     void gotoAutoTodoList();
     void clearTerminal();
-    
+
 
     std::vector<std::string> getResponseFromUser();
 

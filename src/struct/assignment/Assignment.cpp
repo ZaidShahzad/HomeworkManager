@@ -1,4 +1,6 @@
 #include "Assignment.h"
+#include <chrono>
+#include <sstream>
 
 Assignment::Assignment(std::string title) {
     this->title = title;
@@ -64,3 +66,35 @@ std::string Assignment::getFormattedDueDate() {
 void Assignment::setDueDate(sys_days dueDate) {
     this->dueDate = dueDate;
 }
+
+std::string Assignment::getTimeLeft() const {
+    using namespace std::chrono;
+    using namespace date;
+
+    // Get the current time and date
+    auto now = system_clock::now();
+    // Current date in days
+    auto nowDays = floor<days>(now);
+
+    // Calculate the difference in days
+    auto daysDiff = dueDate - nowDays;
+
+    if (daysDiff.count() < 0) {
+        return "Overdue";
+    }
+
+    // Calculates exact time difference
+    auto exactTimeDiff = dueDate - now;
+
+    // Gets remaining hours of the day
+    auto hoursLeft = duration_cast<hours>(exactTimeDiff) % 24;
+    // Gets remaining minutes of the hour
+    auto minutesLeft = duration_cast<minutes>(exactTimeDiff) % 60;
+
+    // Output
+    std::stringstream ss;
+    ss << daysDiff.count() << " days " << hoursLeft.count() << " hrs "
+       << minutesLeft.count() << " min left";
+    return ss.str();
+}
+
