@@ -274,7 +274,6 @@ void HWMTerminal::gotoMainMenu() {
         std::cout << "Invalid Args, you have typed a command incorrectly.\n";
         this->gotoMainMenu();
         return;
-        
     }
 }
 
