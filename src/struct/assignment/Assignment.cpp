@@ -86,11 +86,12 @@ std::string Assignment::getTimeLeft() const {
     // Calculates exact time difference
     auto exactTimeDiff = dueDate - now;
 
-    // convert to hours and minutes
-    auto hoursLeft = duration_cast<hours>(exactTimeDiff) % 24; // Modulo 24 to get remaining hours of the day
-    auto minutesLeft = duration_cast<minutes>(exactTimeDiff) % 60; // Modulo 60 to get remaining minutes of the hour
+    // Gets remaining hours of the day
+    auto hoursLeft = duration_cast<hours>(exactTimeDiff) % 24;
+    // Gets remaining minutes of the hour
+    auto minutesLeft = duration_cast<minutes>(exactTimeDiff) % 60;
 
-    // output
+    // Output
     std::stringstream ss;
     ss << daysDiff.count() << " days " << hoursLeft.count() << " hrs "
        << minutesLeft.count() << " min left";
