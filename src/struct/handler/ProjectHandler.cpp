@@ -206,3 +206,43 @@ std::vector<Assignment*> ProjectHandler::findAssignmentsByPattern(std::string pa
     return assignments;
 }
 
+bool ProjectHandler::boyerMooreSearch(std::string text, std::string pattern) {
+    if (text.length() < pattern.length()) {
+        return false;
+    }
+
+    std::unordered_map<char, int> last;
+    for (int i = 0; i < pattern.length(); ++i) {
+        last[pattern[i]] = i;
+    }
+
+    int i = pattern.length() - 1;
+    int j = pattern.length() - 1;
+
+    while (i < text.length()) {
+        if (text[i] == pattern[j]) {
+            if (j == 0) {
+                return true;
+            }
+            --i;
+            --j;
+        } else {
+            int l = last[text[i]];
+            i = i + pattern.length() - std::min(j, l + 1);
+            j = pattern.length() - 1;
+        }
+    }
+
+    return false;
+}
+
+std::vector<Assignment*> ProjectHandler::findAssignmentsInHistoryByPattern(std::string pattern) {
+    std::vector<Assignment*> assignments;
+    for(Assignment* assignment : this->getCompletedAssignmentsHistory()) {
+        if (this->boyerMooreSearch(Utils::getInstance()->toLowerCase(assignment->getTitle()), pattern)) {
+            assignments.push_back(assignment);
+        }
+    }
+    return assignments;
+}
+

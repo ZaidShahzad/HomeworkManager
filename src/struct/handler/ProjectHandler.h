@@ -25,6 +25,7 @@ private:
     std::vector<Assignment*> completedAssignmentsHistory;
 
     bool rabinKarpSearch(std::string text, std::string pattern);
+    bool boyerMooreSearch(std::string text, std::string pattern);
 
 public:
     ProjectHandler();
@@ -45,6 +46,7 @@ public:
     Course* findCourseByName(std::string courseName);
     Assignment* findAssignmentByID(std::string id);
     std::vector<Assignment*> findAssignmentsByPattern(std::string pattern);
+    std::vector<Assignment*> findAssignmentsInHistoryByPattern(std::string pattern);
     int findCourseIndexInVectorByName(std::string courseName);
     int findAssignmentIndexInVectorByID(std::string assignmentID);
     bool isValidDateFormat(std::string string);

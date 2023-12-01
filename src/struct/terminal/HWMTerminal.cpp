@@ -124,6 +124,7 @@ void HWMTerminal::printMainMenu() {
     std::cout << "\n";
     std::cout << "Search Commands\n";
     std::cout << " * /sa <query>                                                          Search for assignments using query\n";
+    std::cout << " * /sh <query>                                                          Search for assignments in history using query\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
@@ -280,6 +281,33 @@ void HWMTerminal::gotoSearchAssignmentsPage(std::string query) {
     this->printSearchAssignmentsPage(query);
     this->handleCommands();
 }
+
+void HWMTerminal::printSearchHistoryPage(std::string query) {
+std::cout << "\n";
+    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Search History -*-\n";
+    std::cout << "\n";
+    std::vector<Assignment*> assignmentsFound = handler.findAssignmentsInHistoryByPattern(query);
+    if(assignmentsFound.empty()) {
+        std::cout << "No assignments found with the query '" << query << "'\n";
+    }
+    else {
+        std::cout << "Assignments found with the query '" << query << "':\n";
+        for(Assignment* assignment : assignmentsFound) {
+            std::cout << " * " << assignment->getTitle() << "\n"
+                      << "   - Class: " << assignment->getParentCourseName() << "\n";
+        }
+    }
+    std::cout << "\n";
+    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << "\n";
+}
+
+void HWMTerminal::gotoSearchHistoryPage(std::string query) {
+    this->clearTerminal();
+    this->setCurrentPage(SEARCH_HISTORY);
+    this->printSearchHistoryPage(query);
+    this->handleCommands();
+}
 ///TODO -essam
 void HWMTerminal::gotoAutoTodoList() {
     this->clearTerminal();
@@ -394,6 +422,10 @@ void HWMTerminal::handleCommands() {
         std::string query = userInput[1];
         this->gotoSearchAssignmentsPage(query);
     }
+    else if(args == 2 && command == "/sh") {
+        std::string query = userInput[1];
+        this->gotoSearchHistoryPage(query);
+    }
     else if(args == 1 && command == "/history") {
         this->gotoViewHistoryPage();
     }
@@ -413,7 +445,7 @@ void HWMTerminal::handleCommands() {
     else if(args == 1 && command == "/main") {
         this->gotoMainMenu();
     }
-        // Invalid args check
+    // Invalid args check
     else {
         std::cout << "Invalid Args, you have typed a command incorrectly.\n";
         this->refreshPage();
