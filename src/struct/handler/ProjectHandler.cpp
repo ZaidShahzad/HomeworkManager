@@ -41,6 +41,15 @@ Course *ProjectHandler::findCourseByName(std::string courseName) {
     return nullptr;
 }
 
+Assignment* ProjectHandler::findAssignmentByID(std::string id) {
+    for(Course* course : this->getCourses()) {
+        for(Assignment* assignment : course->getAssignments()) {
+            if(Utils::getInstance()->toLowerCase(assignment->getAssignmentID()) == Utils::getInstance()->toLowerCase(id)) return assignment;
+        }
+    }
+    return nullptr;
+}
+
 // This function will return a course index if it's found by the name passed it, if not, it will return -1
 int ProjectHandler::findCourseIndexInVectorByName(std::string courseName) {
     int index = 0;

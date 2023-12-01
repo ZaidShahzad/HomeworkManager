@@ -278,11 +278,21 @@ void HWMTerminal::handleCommands() {
         std::string dueDate = userInput[4];
 
         std::string courseName = userInput[1];
+        courseName[0] = ::toupper(courseName[0]);
+
+        if(!handler.courseExists(courseName)) {
+            std::cout << "That course did not exist, creating it now and adding your assignment to it.\n";
+            handler.createCourse(courseName);
+        }
+
         bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel,dueDate);
         if(assignmentCreated) {
-            std::cout << "Created " << assignmentName << "! Now in " << courseName << " Course!\n";
-            std::cout << " * Due Date: " << dueDate << std::endl;
-            std::cout << " * Priority: " << priorityLevel << std::endl;
+            Assignment* assignment = handler.findAssignmentByID(courseName + "-" + assignmentName);
+            std::cout << "Added " << assignment->getTitle() << " to " << courseName << "\n"
+                      << "  * Due Date: " << assignment->getFormattedDueDate() << " ("
+                      << assignment->getTimeLeft() << ")\n"
+                      << "  * Priority Level: " << assignment->getPriorityLevel() << "\n"
+                      << "  * Delete?: Type /d " << assignment->getAssignmentID() << "\n";
         }
         else {
             std::cout << "Unfortunately, the assignment could not be created!\n";

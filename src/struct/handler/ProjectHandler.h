@@ -38,6 +38,7 @@ public:
     bool courseExists(std::string courseName);
 
     Course* findCourseByName(std::string courseName);
+    Assignment* findAssignmentByID(std::string id);
     int findCourseIndexInVectorByName(std::string courseName);
     bool isValidDateFormat(std::string string);
 

@@ -73,6 +73,10 @@ std::string Assignment::getAssignmentID() {
     return this->assignmentID;
 }
 
+std::string Assignment::getParentCourse() {
+    return this->parentCourse;
+}
+
 std::string Assignment::getTimeLeft() {
 
     // Get the current time and date

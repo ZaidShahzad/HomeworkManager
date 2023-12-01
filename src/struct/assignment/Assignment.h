@@ -67,6 +67,7 @@ public:
 // getter for time left until due date
     std::string getTimeLeft();
     std::string getAssignmentID();
+    std::string getParentCourse();
 };
 
 #endif 
