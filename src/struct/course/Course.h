@@ -10,7 +10,7 @@
 
 
 class Course {
-private: 
+private:
     std::string courseName;
     std::vector<Assignment*> assignments; //vector of pointers
 
@@ -18,10 +18,13 @@ private:
 public:
     Course(std::string courseName);
     //getter for courseName
-    std::string getCourseName(); 
+    std::string getCourseName();
 
     //setter for courseName
     void setCourseName(std::string name);
+
+    // Check if a assignment exists (by it's name)
+    bool assignmentExists(std::string assignmentName);
 
     //getter for assignments
     std::vector<Assignment*>& getAssignments();

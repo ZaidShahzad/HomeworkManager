@@ -1,5 +1,13 @@
 #include "Assignment.h"
 
+Assignment::Assignment(std::string title) {
+    this->title = title;
+    this->completed = false;
+    this->description = "";
+    this->priorityLevel = 1;
+    this->preparedDescription = "";
+}
+
 // Getter for title
 std::string Assignment::getTitle() {
     return this->title;
@@ -43,4 +51,16 @@ std::string Assignment::getPreparationDescription() {
 // Setter for preparationDescription
 void Assignment::setPreparationDescription(std::string newPrepDescription) {
     this->preparedDescription = newPrepDescription;
+}
+
+void Assignment::setPriorityLevel(int priorityLevel) {
+    this->priorityLevel = priorityLevel;
+}
+
+std::string Assignment::getFormattedDueDate() {
+    return date::format("%m-%d-%Y", this->dueDate);
+}
+
+void Assignment::setDueDate(sys_days dueDate) {
+    this->dueDate = dueDate;
 }

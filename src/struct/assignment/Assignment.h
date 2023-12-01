@@ -4,47 +4,62 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "../utils/date.h"
+using namespace date;
 
 
 
 class Assignment {
 //Private member variables
-private: 
-   std::string title;                 
-   bool completed;                    
-   std::string description;
-   int priorityLevel;
-   std::string preparedDescription;
+private:
+    std::string title;
+    bool completed;
+    std::string description;
+    int priorityLevel;
+    std::string preparedDescription;
+    sys_days dueDate;
+
+
 
 public:
+
+// Constructor
+    Assignment(std::string title);
+
 //Public member functions for accessing and modifying private members
 
 //Getters for the title
-   std::string getTitle();
+    std::string getTitle();
 
 //setter for the title
-   void setTitle(std::string newTitle);
+    void setTitle(std::string newTitle);
 
 //getter for the completion status
-   bool isCompleted();
+    bool isCompleted();
 
 //setter for the completion status
-   void setCompleted(bool isCompleted);
+    void setCompleted(bool isCompleted);
 
 //getter for the description
-   std::string getDescription();
+    std::string getDescription();
 
 //setter for the description
-   void setDescription(std::string newDescription);
+    void setDescription(std::string newDescription);
 
 //getter for the priority level
-   int getPriorityLevel();
+    int getPriorityLevel();
 
 //getter for the prepared description
-   std::string getPreparationDescription();
+    std::string getPreparationDescription();
 
 //setter for the prepared description
-   void setPreparationDescription(std::string newPrepDescription);
+    void setPreparationDescription(std::string newPrepDescription);
+
+    void setPriorityLevel(int priorityLevel);
+
+    std::string getFormattedDueDate();
+    void setDueDate(sys_days dueDate);
+
 
 };
 

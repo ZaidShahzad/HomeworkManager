@@ -6,6 +6,7 @@
 #define HOMEWORKMANAGER_UTILS_H
 
 #include "../handler/ProjectHandler.h"
+#include "../utils/termcolor.hpp"
 
 // Singleton Class to make it easier to access to all files that require this class
 
@@ -22,6 +23,8 @@ public:
     static Utils* getInstance();
 
     ProjectHandler getProjectHandler();
+    std::string toLowerCase(std::string string);
+
 };
 
 

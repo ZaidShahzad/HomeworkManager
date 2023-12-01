@@ -18,3 +18,10 @@ Utils* Utils::getInstance() {
 ProjectHandler Utils::getProjectHandler() {
     return this->handler;
 }
+
+std::string Utils::toLowerCase(std::string string) {
+    for(int i = 0; i < string.length(); i++) {
+        string[i] = tolower(string[i]);
+    }
+    return string;
+}

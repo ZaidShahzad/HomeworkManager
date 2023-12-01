@@ -22,7 +22,6 @@ class HWMTerminal {
 
 private:
     Page currentPage;
-    std::string getCommandWithoutSlash(std::string command);
 
 public:
     HWMTerminal();
@@ -39,6 +38,7 @@ public:
     void gotoAllAssignmentsPage();
     void gotoViewCourseAssignmentsPage(std::string courseName);
     void gotoAutoTodoList();
+    void clearTerminal();
 
 
     std::vector<std::string> getResponseFromUser();

@@ -2,6 +2,10 @@
 #include <iostream>
 #include <algorithm>
 #include "../utils/Utils.h"
+#include <cstdlib>
+#include <sstream>
+#include <iomanip>
+#include <unistd.h>
 
 ProjectHandler handler = Utils::getInstance()->getProjectHandler();
 ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
@@ -15,14 +19,20 @@ Page HWMTerminal::getCurrentPage() {
     return this->currentPage;
 }
 
-std::string HWMTerminal::getCommandWithoutSlash(std::string command) {
-    command.erase(remove(command.begin(), command.end(), '/'), command.end());
-    return command;
-}
 
 // This will allow you to set the page the user is on
 void HWMTerminal::setCurrentPage(Page page) {
     this->currentPage = page;
+}
+
+void HWMTerminal::clearTerminal() {
+//#ifdef _WIN32
+//    std::system("cls"); // For Windows
+//    usleep(10000);
+//#else
+//    std::system("clear"); // For Unix/Linux/MacOS
+//    usleep(10000);
+//#endif
 }
 
 // This function will get a response from the user and return a vector as the user's response
@@ -58,15 +68,18 @@ void HWMTerminal::printCourses() {
 void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
     Course* courseFound = handler.findCourseByName(courseName);
 
-    std::cout << courseName << "'s Assignments:\n";
+    std::cout << courseFound->getCourseName() << "'s Assignment:\n";
     if(courseFound->getAssignments().empty()) {
         std::cout << " * There are no assignments for this class :)\n";
     }
     else {
         for(Assignment* assignment : courseFound->getAssignments()) {
             std::cout << " * " << assignment->getTitle() << "\n";
+            std::cout << "   - Due Date: " << assignment->getFormattedDueDate() << std::endl;
+            std::cout << "   - Priority Level: " << assignment->getPriorityLevel() << std::endl;
         }
     }
+    std::cout << std::endl;
 }
 
 // This function will print the main menu (first page you land on when program starts)
@@ -83,19 +96,19 @@ void HWMTerminal::printMainMenu() {
     }
     std::cout << "\n";
     std::cout << "Create or Delete Course:\n";
-    std::cout << "  * /createcourse (/cc) <className>                             Create a course\n";
-    std::cout << "  * /deletecourse (/dc) <className>                             Delete a Course\n";
+    std::cout << "  * /cc <className>                                                      Create a course\n";
+    std::cout << "  * /dc <className>                                                      Delete a Course\n";
     std::cout << "\n";
-    std::cout << "Add Assignment To Course:\n";
-    std::cout << "  * /<courseName> add <name> <dueDate> <priorityLevel>          Add a assignment to a course\n";
+    std::cout << "Create Assignment for Course:\n";
+    std::cout << "  * /ca <className> <nameOfAssignment> <priorityLevel> <dueDate>        Add a assignment to a course\n";
     std::cout << "      - Due Date Example: 1-1-2023\n";
-    std::cout << "      - Priority Level Example: ! -> !!!!!\n";
+    std::cout << "      - Priority Level Example: 1 -> 5\n";
     std::cout << "\n";
     std::cout << "View Assignments\n";
-    std::cout << " * /today                                                       View what assignments are due today\n";
-    std::cout << " * /all                                                         View assignments of all courses\n";
-    std::cout << " * /view <courseName>                                           View assignments of a specific course\n";
-    std::cout << " * /todolist                                                    View Todo List\n";
+    std::cout << " * /today                                                                View what assignments are due today\n";
+    std::cout << " * /all                                                                  View assignments of all courses\n";
+    std::cout << " * /view <className>                                                    View assignments of a specific course\n";
+    std::cout << " * /todolist                                                             View Todo List\n";
     std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
@@ -125,18 +138,17 @@ void HWMTerminal::printAllAssignmentsPage() {
             printAssignmentsForCourse(course->getCourseName());
         }
     }
-    std::cout << "\n";
     std::cout << "--> Enter '/main' to go back to main menu\n";
     std::cout << "\n";
 }
 
 // This function will print the page where it will show all assignments for a specific course
 void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
+    Course* course = handler.findCourseByName(courseName);
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | " << courseName << "'s Assignments -*-\n";
+    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | " << course->getCourseName() << "'s Assignments -*-\n";
     std::cout << "\n";
     this->printAssignmentsForCourse(courseName);
-    std::cout << "\n";
     std::cout << "--> Enter '/main' to go back to main menu\n";
     std::cout << "\n";
 }
@@ -144,6 +156,7 @@ void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
 
 // This function goes to the Due Today assignment page
 void HWMTerminal::gotoDueTodayAssignmentsPage() {
+    this->clearTerminal();
     this->setCurrentPage(DUE_TODAY_ASSIGNMENTS);
     this->printDueTodayAssignmentsPage();
 
@@ -155,7 +168,7 @@ void HWMTerminal::gotoDueTodayAssignmentsPage() {
         this->gotoMainMenu();
         return;
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, try '/main'.\n";
         this->gotoDueTodayAssignmentsPage();
@@ -165,6 +178,7 @@ void HWMTerminal::gotoDueTodayAssignmentsPage() {
 
 // This function goes to the All Assignments Page
 void HWMTerminal::gotoAllAssignmentsPage() {
+    this->clearTerminal();
     this->setCurrentPage(ALL_ASSIGNMENTS);
     this->printAllAssignmentsPage();
 
@@ -176,7 +190,7 @@ void HWMTerminal::gotoAllAssignmentsPage() {
         this->gotoMainMenu();
         return;
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, try '/main'.\n";
         this->gotoDueTodayAssignmentsPage();
@@ -186,6 +200,7 @@ void HWMTerminal::gotoAllAssignmentsPage() {
 
 // This function goes to the Course Assignments Page
 void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
+    this->clearTerminal();
     if(!handler.courseExists(courseName)) {
         std::cout << "That course does not exist!\n";
         this->gotoMainMenu();
@@ -203,7 +218,7 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
         this->gotoMainMenu();
         return;
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, try '/main'.\n";
         this->gotoDueTodayAssignmentsPage();
@@ -213,6 +228,7 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
 
 ///TODO -essam
 void HWMTerminal::gotoAutoTodoList() {
+    this->clearTerminal();
     this->setCurrentPage(AUTO_TODO_LIST);
     std::cout << "How many days in advance do you wish to start your work? [Enter a number]\n";
 
@@ -222,14 +238,16 @@ void HWMTerminal::gotoAutoTodoList() {
 // This function will send the user to the Main Menu and wait for a response. When the response is given,
 // it will do the necessary actions depending on the response.
 void HWMTerminal::gotoMainMenu() {
+    this->clearTerminal();
     this->setCurrentPage(MAIN_MENU);
     this->printMainMenu();
 
     std::vector<std::string> userInput = getResponseFromUser();
     std::string command = userInput[0];
+    int args = userInput.size();
 
     // Handle commands
-    if(command == "/createcourse"|| command == "/cc") {
+    if(args == 2 && command == "/cc") {
         std::string className = userInput[1];
         bool courseCreated = handler.createCourse(className);
 
@@ -241,7 +259,7 @@ void HWMTerminal::gotoMainMenu() {
         }
         this->gotoMainMenu();
     }
-    else if(command == "/deletecourse" || command == "/dc") {
+    else if(args == 2 && command == "/dc") {
         std::string className = userInput[1];
         bool courseDeleted = handler.deleteCourse(className);
 
@@ -253,28 +271,52 @@ void HWMTerminal::gotoMainMenu() {
         }
         this->gotoMainMenu();
     }
-    else if(handler.courseExists(getCommandWithoutSlash(command)) && (userInput[1] == "add")) {
+    else if(args == 5 && command == "/ca") {
+        std::string assignmentName = userInput[2];
+        int priorityLevel = 1;
+        try {
+            priorityLevel = std::stoi(userInput[3]);
+        }
+        catch (std::invalid_argument exception) {
+            std::cout << "Your priority level was invalid. Defaulting to 1.\n";
+        }
+        if(priorityLevel < 1 || priorityLevel > 5) {
+            std::cout << "Please make sure your priority level is between 1-5.\n";
+            this->gotoMainMenu();
+            return;
+        }
+        std::string dueDate = userInput[4];
 
+        std::string courseName = userInput[1];
+        bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel,dueDate);
+        if(assignmentCreated) {
+            std::cout << "Created " << assignmentName << "! Now in " << courseName << " Course!\n";
+            std::cout << " * Due Date: " << dueDate << std::endl;
+            std::cout << " * Priority: " << priorityLevel << std::endl;
+        }
+        else {
+            std::cout << "Unfortunately, the assignment could not be created!\n";
+        }
+        this->gotoMainMenu();
     }
-    else if(command == "/today") {
-       this->gotoDueTodayAssignmentsPage();
+    else if(args == 1 && command == "/today") {
+        this->gotoDueTodayAssignmentsPage();
     }
-    else if(command == "/all") {
+    else if(args == 1 && command == "/all") {
         this->gotoAllAssignmentsPage();
     }
-    else if(command == "/view") {
+    else if(args == 2 && command == "/view") {
         std::string className = userInput[1];
         this->gotoViewCourseAssignmentsPage(className);
     }
-    else if(command == "/todolist") {
+    else if(args == 1 && command == "/todolist") {
         this->gotoAutoTodoList();
     }
-    // Invalid args check
+        // Invalid args check
     else {
         std::cout << "Invalid Args, you have typed a command incorrectly.\n";
         this->gotoMainMenu();
         return;
     }
 }
-
 
