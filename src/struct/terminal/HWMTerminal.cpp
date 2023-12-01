@@ -122,6 +122,9 @@ void HWMTerminal::printMainMenu() {
     std::cout << " * /history                                                             View all completed assignments\n";
     std::cout << " * /todolist                                                            View Todo List\n";
     std::cout << "\n";
+    std::cout << "Search Commands\n";
+    std::cout << " * /sa <query>                                                          Search for assignments using query\n";
+    std::cout << "\n";
     std::cout << "ACTION: Please type in a command to continue.\n";
     std::cout << "\n";
 }
@@ -246,12 +249,42 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
     this->handleCommands();
 }
 
+void HWMTerminal::printSearchAssignmentsPage(std::string query) {
+    std::cout << "\n";
+    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Search Assignments -*-\n";
+    std::cout << "\n";
+    std::vector<Assignment*> assignmentsFound = handler.findAssignmentsByPattern(query);
+    if(assignmentsFound.empty()) {
+        std::cout << "No assignments found with the query '" << query << "'\n";
+    }
+    else {
+        std::cout << "Assignments found with the query '" << query << "':\n";
+        for(Assignment* assignment : assignmentsFound) {
+            std::cout << " * " << assignment->getTitle() << "\n"
+                      << "   - Class: " << assignment->getParentCourseName() << "\n"
+                      << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
+                      << assignment->getTimeLeft() << ")\n"
+                      << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
+                      << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
+                      << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+        }
+    }
+    std::cout << "\n";
+    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << "\n";
+}
+
+void HWMTerminal::gotoSearchAssignmentsPage(std::string query) {
+    this->clearTerminal();
+    this->setCurrentPage(SEARCH_ASSIGNMENTS);
+    this->printSearchAssignmentsPage(query);
+    this->handleCommands();
+}
 ///TODO -essam
 void HWMTerminal::gotoAutoTodoList() {
     this->clearTerminal();
     this->setCurrentPage(AUTO_TODO_LIST);
     std::cout << "How many days in advance do you wish to start your work? [Enter a number]\n";
-
     return;
 }
 
@@ -356,6 +389,10 @@ void HWMTerminal::handleCommands() {
             std::cout << "Unfortunately, that assignment could not be completed!\n";
         }
         this->refreshPage();
+    }
+    else if(args == 2 && command == "/sa") {
+        std::string query = userInput[1];
+        this->gotoSearchAssignmentsPage(query);
     }
     else if(args == 1 && command == "/history") {
         this->gotoViewHistoryPage();

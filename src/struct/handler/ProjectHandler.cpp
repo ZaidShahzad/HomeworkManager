@@ -149,3 +149,60 @@ bool ProjectHandler::completeAssignment(std::string assignmentID) {
     this->deleteAssignment(assignmentID);
     return true;
 }
+
+bool ProjectHandler::rabinKarpSearch(std::string text, std::string pattern) {
+    if (text.length() < pattern.length()) {
+        return false;
+    }
+
+    const int base = 256;
+    const int prime = 101;
+
+    int patternHash = 0;
+    int textHash = 0;
+    int h = 1;
+
+    for (int i = 0; i < pattern.length(); ++i) {
+        patternHash = (base * patternHash + pattern[i]) % prime;
+        textHash = (base * textHash + text[i]) % prime;
+        if (i < pattern.length() - 1) {
+            h = (h * base) % prime;
+        }
+    }
+
+    for (int i = 0; i <= text.length() - pattern.length(); ++i) {
+        if (patternHash == textHash) {
+            int j;
+            for (j = 0; j < pattern.length(); ++j) {
+                if (text[i + j] != pattern[j]) {
+                    break;
+                }
+            }
+            if (j == pattern.length()) {
+                return true;
+            }
+        }
+
+        if (i < text.length() - pattern.length()) {
+            textHash = (base * (textHash - text[i] * h) + text[i + pattern.length()]) % prime;
+            if (textHash < 0) {
+                textHash += prime;
+            }
+        }
+    }
+
+    return false;
+}
+
+std::vector<Assignment*> ProjectHandler::findAssignmentsByPattern(std::string pattern) {
+    std::vector<Assignment*> assignments;
+    for(Course* course : this->getCourses()) {
+        for(Assignment* assignment : course->getAssignments()) {
+            if (this->rabinKarpSearch(Utils::getInstance()->toLowerCase(assignment->getTitle()), pattern)) {
+                assignments.push_back(assignment);
+            }
+        }
+    }
+    return assignments;
+}
+

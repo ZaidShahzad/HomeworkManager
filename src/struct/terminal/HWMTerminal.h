@@ -16,6 +16,7 @@ enum Page {
     ALL_ASSIGNMENTS,
     VIEW_COURSE_ASSIGNMENTS,
     VIEW_HISTORY,
+    SEARCH_ASSIGNMENTS,
     AUTO_TODO_LIST
 };
 
@@ -35,6 +36,7 @@ public:
     void printCourses();
     void printAssignmentsForCourse(std::string courseName);
     void printViewHistoryPage();
+    void printSearchAssignmentsPage(std::string query);
 
     void gotoMainMenu();
     void gotoDueTodayAssignmentsPage();
@@ -42,6 +44,7 @@ public:
     void gotoViewCourseAssignmentsPage(std::string courseName);
     void gotoViewHistoryPage();
     void gotoAutoTodoList();
+    void gotoSearchAssignmentsPage(std::string query);
     void clearTerminal();
     void handleCommands();
     void refreshPage();
