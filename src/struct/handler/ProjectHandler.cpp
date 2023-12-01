@@ -60,6 +60,17 @@ int ProjectHandler::findCourseIndexInVectorByName(std::string courseName) {
     return -1;
 }
 
+int ProjectHandler::findAssignmentIndexInVectorByID(std::string assignmentID) {
+    int index = 0;
+    Assignment* toFindAssignment = this->findAssignmentByID(assignmentID);
+    Course* course = this->findCourseByName(toFindAssignment->getParentCourseName());
+    for(Assignment* assignment : course->getAssignments()) {
+        if(Utils::getInstance()->toLowerCase(assignment->getAssignmentID()) == Utils::getInstance()->toLowerCase(assignmentID)) return index;
+        index++;
+    }
+    return -1;
+}
+
 // This function creates a course. If it's done successfully, it returns true, if not, returns false
 bool ProjectHandler::createCourse(std::string courseName) {
     if(courseExists(courseName)) return false;
@@ -102,5 +113,19 @@ bool ProjectHandler::createAssignment(std::string className, std::string assignm
 
     assignment->setPriorityLevel(priorityLevel);
     course->getAssignments().push_back(assignment);
+    return true;
+}
+
+bool ProjectHandler::deleteAssignment(std::string assignmentID) {
+    Assignment* assignment = this->findAssignmentByID(assignmentID);
+    if(assignment == nullptr) {
+        std::cout << "That assignment ID was invalid!\n";
+        return false;
+    }
+    Course* course = this->findCourseByName(assignment->getParentCourseName());
+    int foundAssignmentIndex = this->findAssignmentIndexInVectorByID(assignmentID);
+    if(foundAssignmentIndex == -1) return false;
+
+    course->getAssignments().erase(course->getAssignments().begin() + foundAssignmentIndex);
     return true;
 }

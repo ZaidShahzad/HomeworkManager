@@ -4,7 +4,7 @@
 
 Assignment::Assignment(std::string title, std::string parentCourse) {
     this->title = title;
-    this->parentCourse = parentCourse;
+    this->parentCourseName = parentCourse;
     this->completed = false;
     this->description = "";
     this->priorityLevel = 1;
@@ -73,8 +73,8 @@ std::string Assignment::getAssignmentID() {
     return this->assignmentID;
 }
 
-std::string Assignment::getParentCourse() {
-    return this->parentCourse;
+std::string Assignment::getParentCourseName() {
+    return this->parentCourseName;
 }
 
 std::string Assignment::getTimeLeft() {

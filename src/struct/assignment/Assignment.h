@@ -20,7 +20,7 @@ private:
     int priorityLevel;
     std::string preparedDescription;
     sys_days dueDate;
-    std::string parentCourse;
+    std::string parentCourseName;
     std::string assignmentID;
 
 
@@ -67,7 +67,7 @@ public:
 // getter for time left until due date
     std::string getTimeLeft();
     std::string getAssignmentID();
-    std::string getParentCourse();
+    std::string getParentCourseName();
 };
 
 #endif 

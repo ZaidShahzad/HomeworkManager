@@ -34,12 +34,14 @@ public:
     bool deleteCourse(std::string courseName);
 
     bool createAssignment(std::string className, std::string assignmentName, int priorityLevel, std::string dueDate);
+    bool deleteAssignment(std::string assignmentID);
 
     bool courseExists(std::string courseName);
 
     Course* findCourseByName(std::string courseName);
     Assignment* findAssignmentByID(std::string id);
     int findCourseIndexInVectorByName(std::string courseName);
+    int findAssignmentIndexInVectorByID(std::string assignmentID);
     bool isValidDateFormat(std::string string);
 
 };

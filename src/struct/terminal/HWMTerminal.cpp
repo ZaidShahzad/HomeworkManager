@@ -85,7 +85,7 @@ void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
                       << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
                       << assignment->getTimeLeft() << ")\n"
                       << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
-                      << "   - Delete?: Type /d " << assignment->getAssignmentID() << "\n";
+                      << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
         }
     }
     std::cout << "\n";
@@ -296,6 +296,18 @@ void HWMTerminal::handleCommands() {
         }
         else {
             std::cout << "Unfortunately, the assignment could not be created!\n";
+        }
+        this->refreshPage();
+    }
+    else if(args == 2 && command == "/d") {
+        std::string assignmentID = userInput[1];
+        bool assignmentDeleted = handler.deleteAssignment(assignmentID);
+
+        if(assignmentDeleted) {
+            std::cout << "You have deleted the Assignment with the ID '" << assignmentID << "'.\n";
+        }
+        else {
+            std::cout << "Unfortunately, that assignment could not be deleted!\n";
         }
         this->refreshPage();
     }
