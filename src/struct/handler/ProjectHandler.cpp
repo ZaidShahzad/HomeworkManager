@@ -1,6 +1,4 @@
 #include "ProjectHandler.h"
-#include "../course/Course.h"
-#include "../assignment/Assignment.h"
 #include "../utils/Utils.h"
 
 ProjectHandler::ProjectHandler() {}
