@@ -29,12 +29,10 @@ private:
     bool rabinKarpSearch(std::string text, std::string pattern);
     bool boyerMooreSearch(std::string text, std::string pattern);
 
-    void saveData();
     void loadData();
 
 public:
     ProjectHandler();
-    ~ProjectHandler();
     ProjectInfo getProjectInfo();
     HWMTerminal getTerminal();
 
@@ -56,6 +54,7 @@ public:
     int findCourseIndexInVectorByName(std::string courseName);
     int findAssignmentIndexInVectorByID(std::string assignmentID);
     bool isValidDateFormat(std::string string);
+    void saveData();
 
 };
 

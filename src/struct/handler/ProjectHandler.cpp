@@ -4,9 +4,6 @@
 ProjectHandler::ProjectHandler() {
     this->loadData();
 }
-ProjectHandler::~ProjectHandler() {
-    this->saveData();
-}
 
 void ProjectHandler::saveData() {
     std::string path;

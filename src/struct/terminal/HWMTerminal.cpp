@@ -410,6 +410,7 @@ void HWMTerminal::handleCommands() {
                       << "  * Priority Level: " << assignment->getPriorityLevel() << "\n"
                       << "  * Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
                       << "  * Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+            handler.saveData();
         }
         else {
             std::cout << "Unfortunately, the assignment could not be created!\n";
