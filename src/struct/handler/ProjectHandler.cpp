@@ -9,7 +9,12 @@ ProjectHandler::~ProjectHandler() {
 }
 
 void ProjectHandler::saveData() {
-    std::string path = Utils::getInstance()->getDesktopPath() + "\\HomeworkManagerData.txt";
+    std::string path;
+    #ifdef _WIN32
+        path = Utils::getInstance()->getDesktopPath() + "\\HomeworkManagerData.txt";
+    #else
+        path = Utils::getInstance()->getDesktopPath() + "/HomeworkManagerData.txt";
+    #endif
     std::ofstream file(path);
     file << "Courses:\n";
     for(Course* course : this->getCourses()) {
@@ -32,7 +37,12 @@ void ProjectHandler::saveData() {
 }
 
 void ProjectHandler::loadData() {
-    std::string path = Utils::getInstance()->getDesktopPath() + "\\HomeworkManagerData.txt";
+    std::string path;
+    #ifdef _WIN32
+        path = Utils::getInstance()->getDesktopPath() + "\\HomeworkManagerData.txt";
+    #else
+        path = Utils::getInstance()->getDesktopPath() + "/HomeworkManagerData.txt";
+    #endif
     std::ifstream file(path);
     std::string line;
     while(std::getline(file, line)) {
