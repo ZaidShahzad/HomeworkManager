@@ -27,6 +27,11 @@ std::string Utils::toLowerCase(std::string string) {
 }
 
 std::string Utils::getDesktopPath() {
-    fs::path desktopPath = fs::path(getenv("USERPROFILE")) / "Desktop";
+    fs::path desktopPath;
+    #ifdef _WIN32
+    desktopPath = fs::path(getenv("USERPROFILE")) / "Desktop";
+    #else
+    desktopPath = fs::path(getenv("HOME")) / "Desktop";
+    #endif
     return desktopPath.string();
 }
