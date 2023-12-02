@@ -135,10 +135,33 @@ void HWMTerminal::printDueTodayAssignmentsPage() {
     std::cout << "\n";
     std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Due Today -*-\n";
     std::cout << "\n";
-    std::cout << "There is nothing due today :)\n";
-    std::cout << "\n";
+    if(handler.getCourses().empty()) {
+        std::cout << "  * No courses found :(\n";
+        std::cout << "\n";
+    }
+    else {
+        for(Course* course : handler.getCourses()) {
+            std::cout << course->getCourseName() << "'s Assignments:\n";
+            if(course->getAssignments().empty()) {
+                std::cout << " * There are no assignments for this class :)\n";
+            } else {
+                for(const auto& assignment : course->getAssignments()) {
+                    if(assignment->isDueToday()) {
+                        std::cout << " * " << assignment->getTitle() << "\n"
+                                  << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
+                                  << assignment->getTimeLeft() << ")\n"
+                                  << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
+                                  << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
+                                  << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+                    }
+                }
+            }
+            std::cout << "\n";
+        }
+    }
     std::cout << "--> Enter '/main' to go back to main menu\n";
     std::cout << "\n";
+
 }
 
 // This function will print the page where it will show all assignments

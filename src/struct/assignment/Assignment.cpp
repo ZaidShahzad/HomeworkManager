@@ -105,3 +105,10 @@ std::string Assignment::getTimeLeft() {
     return ss.str();
 }
 
+bool Assignment::isDueToday() {
+    auto now = system_clock::now();
+    auto nowDays = floor<days>(now);
+    auto daysDiff = dueDate - nowDays;
+    return daysDiff.count() == 0;
+}
+

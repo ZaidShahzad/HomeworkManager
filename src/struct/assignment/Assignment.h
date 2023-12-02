@@ -64,6 +64,7 @@ public:
     std::string getTimeLeft();
     std::string getAssignmentID();
     std::string getParentCourseName();
+    bool isDueToday();
 };
 
 #endif 
