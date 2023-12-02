@@ -77,38 +77,23 @@ std::string Assignment::getParentCourseName() {
 }
 
 std::string Assignment::getTimeLeft() {
-
-    // Get the current time and date
     auto now = system_clock::now();
-    // Current date in days
     auto nowDays = floor<days>(now);
-
-    // Calculate the difference in days
     auto daysDiff = dueDate - nowDays;
-
-    if (daysDiff.count() < 0) {
-        return "Overdue";
+    daysDiff += days(1);
+    std::stringstream timeLeftStream;
+    if(daysDiff.count() == 0) {
+        timeLeftStream << "Due Today";
+    } else if(daysDiff.count() > 0){
+        timeLeftStream << "Due in " << daysDiff.count() << " Days";
     }
-
-    // Calculates exact time difference
-    auto exactTimeDiff = dueDate - now;
-
-    // Gets remaining hours of the day
-    auto hoursLeft = duration_cast<hours>(exactTimeDiff) % 24;
-    // Gets remaining minutes of the hour
-    auto minutesLeft = duration_cast<minutes>(exactTimeDiff) % 60;
-
-    // Output
-    std::stringstream ss;
-    ss << daysDiff.count() << " days " << hoursLeft.count() << " hrs "
-       << minutesLeft.count() << " min left";
-    return ss.str();
+    else {
+        timeLeftStream << "Overdue [" << daysDiff.count() * -1 << " Days Ago]";
+    }
+    return timeLeftStream.str();
 }
 
 bool Assignment::isDueToday() {
-    auto now = system_clock::now();
-    auto nowDays = floor<days>(now);
-    auto daysDiff = dueDate - nowDays;
-    return daysDiff.count() == 0;
+    return this->getTimeLeft() == "Due Today";
 }
 
