@@ -3,10 +3,10 @@
 //
 
 #include "Utils.h"
-
 // Set INSTANCE to the class itsself
 Utils::Utils() {
     INSTANCE = this;
+    this->handler = new ProjectHandler();
 }
 
 // get the instance of the class
@@ -16,7 +16,7 @@ Utils* Utils::getInstance() {
 }
 
 ProjectHandler Utils::getProjectHandler() {
-    return this->handler;
+    return *this->handler;
 }
 
 std::string Utils::toLowerCase(std::string string) {
@@ -24,4 +24,9 @@ std::string Utils::toLowerCase(std::string string) {
         string[i] = tolower(string[i]);
     }
     return string;
+}
+
+std::string Utils::getDesktopPath() {
+    fs::path desktopPath = fs::path(getenv("USERPROFILE")) / "Desktop";
+    return desktopPath.string();
 }

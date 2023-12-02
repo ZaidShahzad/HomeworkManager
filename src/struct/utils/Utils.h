@@ -8,13 +8,16 @@
 #include "../handler/ProjectHandler.h"
 #include "../utils/termcolor.hpp"
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 // Singleton Class to make it easier to access to all files that require this class
 
 class Utils {
 
 private:
     static Utils* INSTANCE;
-    ProjectHandler handler;
+    ProjectHandler* handler;
 
 public:
     Utils();
@@ -24,6 +27,7 @@ public:
 
     ProjectHandler getProjectHandler();
     std::string toLowerCase(std::string string);
+    std::string getDesktopPath();
 
 };
 

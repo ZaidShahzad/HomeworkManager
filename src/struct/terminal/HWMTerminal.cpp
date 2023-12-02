@@ -401,11 +401,6 @@ void HWMTerminal::handleCommands() {
         std::string courseName = userInput[1];
         courseName[0] = ::toupper(courseName[0]);
 
-        if(!handler.courseExists(courseName)) {
-            std::cout << "That course did not exist, creating it now and adding your assignment to it.\n";
-            handler.createCourse(courseName);
-        }
-
         bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel,dueDate);
         if(assignmentCreated) {
             Assignment* assignment = handler.findAssignmentByID(courseName + "-" + assignmentName);

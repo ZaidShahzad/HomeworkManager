@@ -5,7 +5,6 @@ Course::Course(std::string courseName) {
     this->courseName = courseName;
     this->assignments = {};
 }
-
 // Check if a assignment exists (by it's name)
 bool Course::assignmentExists(std::string assignmentName) {
     for(Assignment* assignment : this->getAssignments()) {

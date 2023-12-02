@@ -7,6 +7,7 @@
 #include "../course/Course.h"
 #include "../utils/date.h"
 #include <unordered_map>
+#include <fstream>
 using namespace date;
 #include <vector>
 
@@ -28,8 +29,12 @@ private:
     bool rabinKarpSearch(std::string text, std::string pattern);
     bool boyerMooreSearch(std::string text, std::string pattern);
 
+    void saveData();
+    void loadData();
+
 public:
     ProjectHandler();
+    ~ProjectHandler();
     ProjectInfo getProjectInfo();
     HWMTerminal getTerminal();
 

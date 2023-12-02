@@ -1,8 +1,60 @@
 #include "ProjectHandler.h"
 #include "../utils/Utils.h"
 
-ProjectHandler::ProjectHandler() {}
+ProjectHandler::ProjectHandler() {
+    this->loadData();
+}
+ProjectHandler::~ProjectHandler() {
+    this->saveData();
+}
 
+void ProjectHandler::saveData() {
+    std::string path = Utils::getInstance()->getDesktopPath() + "\\HomeworkManagerData.txt";
+    std::ofstream file(path);
+    file << "Courses:\n";
+    for(Course* course : this->getCourses()) {
+        for(Assignment* assignment : course->getAssignments()) {
+            std::string courseName = course->getCourseName();
+            std::string assignmentName = assignment->getTitle();
+            int priorityLevel = assignment->getPriorityLevel();
+            std::string dueDate = assignment->getFormattedDueDate();
+            file << "/ca " << courseName << " " << assignmentName << " " << priorityLevel << " " << dueDate << "\n";
+        }
+    }
+    file << "Completed Assignments:\n";
+    for(Assignment* assignment : this->getCompletedAssignmentsHistory()) {
+        std::string courseName = assignment->getParentCourseName();
+        std::string assignmentName = assignment->getTitle();
+        int priorityLevel = assignment->getPriorityLevel();
+        std::string dueDate = assignment->getFormattedDueDate();
+        file << "/ca " << courseName << " " << assignmentName << " " << priorityLevel << " " << dueDate << " completed\n";
+    }
+}
+
+void ProjectHandler::loadData() {
+    std::string path = Utils::getInstance()->getDesktopPath() + "\\HomeworkManagerData.txt";
+    std::ifstream file(path);
+    std::string line;
+    while(std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string command;
+        iss >> command;
+        if(command == "/ca") {
+            std::string courseName;
+            std::string assignmentName;
+            int priorityLevel;
+            std::string dueDate;
+            std::string completed;
+            iss >> courseName >> assignmentName >> priorityLevel >> dueDate >> completed;
+            if(completed == "completed") {
+                this->createAssignment(courseName, assignmentName, priorityLevel, dueDate);
+                this->completeAssignment(courseName + "-" + assignmentName);
+            } else {
+                this->createAssignment(courseName, assignmentName, priorityLevel, dueDate);
+            }
+        }
+    }
+}
 ProjectInfo ProjectHandler::getProjectInfo() {
     return this->projectInfo;
 }
@@ -101,11 +153,12 @@ bool ProjectHandler::deleteCourse(std::string courseName) {
 }
 
 bool ProjectHandler::createAssignment(std::string className, std::string assignmentName, int priorityLevel, std::string dueDate) {
+    if(!this->courseExists(className)) {
+        this->createCourse(className);
+    }
     Course* course = findCourseByName(className);
-
     // Check if an assignment already exists (check's by name)
     if(course->assignmentExists(assignmentName)) return false;
-
     if(!this->isValidDateFormat(dueDate)){
         std::cout << "Your due date was invalid.\n";
         return false;
