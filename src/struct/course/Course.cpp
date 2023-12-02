@@ -24,7 +24,10 @@ void Course::setCourseName(std::string name) {
     this->courseName = name;
 }
 
-//getter for assignments
+// Sort the assignments based on due date
 std::vector<Assignment*>& Course::getAssignments() {
+    std::sort(this->assignments.begin(), this->assignments.end(), [](Assignment* a, Assignment* b) {
+        return a->getDaysLeft() < b->getDaysLeft();
+    });
     return this->assignments;
 }

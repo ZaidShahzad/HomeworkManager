@@ -203,6 +203,9 @@ void HWMTerminal::printViewHistoryPage() {
         for(const auto& assignment : handler.getCompletedAssignmentsHistory()) {
             std::cout << " * " << assignment->getTitle() << "\n";
             std::cout << "   - Class: " << assignment->getParentCourseName() << "\n";
+            std::cout << "   - Due Date: " << assignment->getFormattedDueDate() << "\n";
+
+
         }
     }
     std::cout << "\n";
@@ -317,7 +320,8 @@ std::cout << "\n";
         std::cout << "Assignments found with the query '" << query << "':\n";
         for(Assignment* assignment : assignmentsFound) {
             std::cout << " * " << assignment->getTitle() << "\n"
-                      << "   - Class: " << assignment->getParentCourseName() << "\n";
+                      << "   - Class: " << assignment->getParentCourseName() << "\n"
+                      << "   - Due Date: " << assignment->getFormattedDueDate() << "\n";
         }
     }
     std::cout << "\n";

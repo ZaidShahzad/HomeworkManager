@@ -20,6 +20,7 @@ Assignment::Assignment(Assignment* assignmentToCopyFrom) {
     this->priorityLevel = assignmentToCopyFrom->priorityLevel;
     this->preparedDescription = assignmentToCopyFrom->preparedDescription;
     this->assignmentID = assignmentToCopyFrom->assignmentID;
+    this->dueDate = assignmentToCopyFrom->dueDate;
 }
 
 // Getter for title
@@ -91,6 +92,14 @@ std::string Assignment::getTimeLeft() {
         timeLeftStream << "Overdue [" << daysDiff.count() * -1 << " Days Ago]";
     }
     return timeLeftStream.str();
+}
+
+int Assignment::getDaysLeft() {
+    auto now = system_clock::now();
+    auto nowDays = floor<days>(now);
+    auto daysDiff = dueDate - nowDays;
+    daysDiff += days(1);
+    return daysDiff.count();
 }
 
 bool Assignment::isDueToday() {

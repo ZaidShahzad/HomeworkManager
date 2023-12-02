@@ -4,10 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
+#include <algorithm>
 #include "../Assignment/Assignment.h"
-
-
 
 class Course {
 private:

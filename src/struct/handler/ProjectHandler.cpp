@@ -16,6 +16,9 @@ std::vector<Course*>& ProjectHandler::getCourses() {
 }
 
 std::vector<Assignment*>& ProjectHandler::getCompletedAssignmentsHistory() {
+    std::sort(this->completedAssignmentsHistory.begin(), this->completedAssignmentsHistory.end(), [](Assignment* a, Assignment* b) {
+        return a->getDaysLeft() < b->getDaysLeft();
+    });
     return this->completedAssignmentsHistory;
 }
 
