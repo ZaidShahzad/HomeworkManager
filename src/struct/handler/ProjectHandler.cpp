@@ -34,6 +34,8 @@ void ProjectHandler::saveData() {
         std::string dueDate = assignment->getFormattedDueDate();
         file << "/ca " << courseName << " " << assignmentName << " " << priorityLevel << " " << dueDate << " completed\n";
     }
+
+    file.close();
 }
 
 void ProjectHandler::loadData() {
@@ -64,6 +66,7 @@ void ProjectHandler::loadData() {
             }
         }
     }
+    file.close();
 }
 ProjectInfo ProjectHandler::getProjectInfo() {
     return this->projectInfo;
