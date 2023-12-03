@@ -4,21 +4,14 @@
 
 Assignment::Assignment(std::string title, std::string parentCourse) {
     this->title = title;
-    this->parentCourseName = parentCourse;
-    this->completed = false;
-    this->description = "";
     this->priorityLevel = 1;
-    this->preparedDescription = "";
     this->assignmentID = parentCourse + "-" + title;
 }
 
 Assignment::Assignment(Assignment* assignmentToCopyFrom) {
     this->title = assignmentToCopyFrom->title;
     this->parentCourseName = assignmentToCopyFrom->parentCourseName;
-    this->completed = assignmentToCopyFrom->completed;
-    this->description = assignmentToCopyFrom->description;
     this->priorityLevel = assignmentToCopyFrom->priorityLevel;
-    this->preparedDescription = assignmentToCopyFrom->preparedDescription;
     this->assignmentID = assignmentToCopyFrom->assignmentID;
     this->dueDate = assignmentToCopyFrom->dueDate;
 }
@@ -32,29 +25,10 @@ std::string Assignment::getTitle() {
 void Assignment::setTitle(std::string newTitle) {
     this->title = newTitle;
 }
-// Getter for description
-std::string Assignment::getDescription() {
-    return this->description;
-}
-
-// Setter for description
-void Assignment::setDescription(std::string newDescription) {
-    this->description = newDescription;
-}
 
 // Getter for priorityLevel
 int Assignment::getPriorityLevel() {
     return this->priorityLevel;
-}
-
-// Getter for preparationDescription
-std::string Assignment::getPreparationDescription() {
-    return this->preparedDescription;
-}
-
-// Setter for preparationDescription
-void Assignment::setPreparationDescription(std::string newPrepDescription) {
-    this->preparedDescription = newPrepDescription;
 }
 
 void Assignment::setPriorityLevel(int priorityLevel) {
