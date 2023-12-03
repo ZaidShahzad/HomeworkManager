@@ -69,18 +69,16 @@ std::vector<std::string> HWMTerminal::getResponseFromUser() {
 
 void HWMTerminal::printCourses() {
     for(Course* course : handler.getCourses()) {
-        std::cout << "  " << course->getCourseName() << "\n";
+        std::cout << "    * " << course->getCourseName() << "\n";
     }
 }
 
 void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
-    Course* courseFound = handler.findCourseByName(courseName);
-
-    std::cout << courseFound->getCourseName() << "'s Assignments:\n";
-    if(courseFound->getAssignments().empty()) {
+    Course* course = handler.findCourseByName(courseName);
+    if(course->getAssignments().empty()) {
         std::cout << " * There are no assignments for this class :)\n";
     } else {
-        for(const auto& assignment : courseFound->getAssignments()) {
+        for(const auto& assignment : course->getAssignments()) {
             std::cout << " * " << assignment->getTitle() << "\n"
                       << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
                       << assignment->getTimeLeft() << ")\n"
@@ -89,44 +87,35 @@ void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
                       << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
         }
     }
-    std::cout << "\n";
 }
 // This function will print the main menu (first page you land on when program starts)
 void HWMTerminal::printMainMenu() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Main Page -*-\n";
+    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Main Menu -*-\n";
     std::cout << "\n";
-    std::cout << "Your Courses\n";
+    std::cout << "    Courses:\n";
     if(handler.getCourses().empty()) {
-        std::cout << "  * No courses found :(\n";
+        std::cout << "    - No courses found :(\n";
     }
     else {
-        printCourses();
+        this->printCourses();
     }
     std::cout << "\n";
-    std::cout << "Course Commands:\n";
-    std::cout << "  * /cc <className>                                                     Create a course\n";
-    std::cout << "  * /dc <className>                                                     Delete a Course\n";
+    std::cout << "    Commands:\n";
+    std::cout << "    - Create Course: /cc <course name>\n";
+    std::cout << "    - Delete Course: /dc <course name>\n";
+    std::cout << "    - Create Assignment: /ca <course name> <assignment name> <priority level> <due date>\n";
+    std::cout << "    - Delete Assignment: /d <assignment ID>\n";
+    std::cout << "    - Complete Assignment: /cm <assignment ID>\n";
+    std::cout << "    - View Course Assignments: /view <course name>\n";
+    std::cout << "    - View All Assignments: /all\n";
+    std::cout << "    - View Due Today Assignments: /today\n";
+    std::cout << "    - View Completed Assignments History: /history\n";
+    std::cout << "    - Search Assignments: /sa <query>\n";
+    std::cout << "    - Search History: /sh <query>\n";
+    std::cout << "    - Auto Todo List: /todolist\n";
     std::cout << "\n";
-    std::cout << "Assignment Commands\n";
-    std::cout << "  * /ca <className> <nameOfAssignment> <priorityLevel> <dueDate>        Add a assignment to a course\n";
-    std::cout << "      - Due Date Example: 1-1-2023\n";
-    std::cout << "      - Priority Level Example: 1 -> 5\n";
-    std::cout << "  * /d <assignmentID>                                                   Delete a assignment using its id\n";
-    std::cout << "  * /cm <assignmentID>                                                  Complete a assignment using its id\n";
-    std::cout << "\n";
-    std::cout << "View Commands\n";
-    std::cout << " * /today                                                               View what assignments are due today\n";
-    std::cout << " * /all                                                                 View assignments of all courses\n";
-    std::cout << " * /view <className>                                                    View assignments of a specific course\n";
-    std::cout << " * /history                                                             View all completed assignments\n";
-    std::cout << " * /todolist                                                            View Todo List\n";
-    std::cout << "\n";
-    std::cout << "Search Commands\n";
-    std::cout << " * /sa <query>                                                          Search for assignments using query\n";
-    std::cout << " * /sh <query>                                                          Search for assignments in history using query\n";
-    std::cout << "\n";
-    std::cout << "ACTION: Please type in a command to continue.\n";
+    std::cout << "--> Enter '/main' to go back to main menu\n";
     std::cout << "\n";
 }
 
@@ -175,7 +164,20 @@ void HWMTerminal::printAllAssignmentsPage() {
     }
     else {
         for(Course* course : handler.getCourses()) {
-            printAssignmentsForCourse(course->getCourseName());
+            std::cout << course->getCourseName() << "'s Assignments:\n";
+            if(course->getAssignments().empty()) {
+                std::cout << " * There are no assignments for this class :)\n";
+            } else {
+                for(const auto& assignment : course->getAssignments()) {
+                    std::cout << " * " << assignment->getTitle() << "\n"
+                              << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
+                              << assignment->getTimeLeft() << ")\n"
+                              << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
+                              << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
+                              << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+                }
+            }
+            std::cout << "\n";
         }
     }
     std::cout << "--> Enter '/main' to go back to main menu\n";
@@ -184,11 +186,31 @@ void HWMTerminal::printAllAssignmentsPage() {
 
 // This function will print the page where it will show all assignments for a specific course
 void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
-    Course* course = handler.findCourseByName(courseName);
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | " << course->getCourseName() << "'s Assignments -*-\n";
+    courseName[0] = std::toupper(courseName[0]);
+    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | " << courseName << "'s Assignments -*-\n";
     std::cout << "\n";
-    this->printAssignmentsForCourse(courseName);
+    if(handler.getCourses().empty()) {
+        std::cout << "  * No courses found :(\n";
+        std::cout << "\n";
+    }
+    else {
+        Course* course = handler.findCourseByName(courseName);
+        std::cout << course->getCourseName() << "'s Assignments:\n";
+        if(course->getAssignments().empty()) {
+            std::cout << " * There are no assignments for this class :)\n";
+        } else {
+            for(const auto& assignment : course->getAssignments()) {
+                std::cout << " * " << assignment->getTitle() << "\n"
+                          << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
+                          << assignment->getTimeLeft() << ")\n"
+                          << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
+                          << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
+                          << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+            }
+        }
+        std::cout << "\n";
+    }
     std::cout << "--> Enter '/main' to go back to main menu\n";
     std::cout << "\n";
 }
@@ -198,14 +220,14 @@ void HWMTerminal::printViewHistoryPage() {
     std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Completed Assignments History -*-\n";
     std::cout << "\n";
     if(handler.getCompletedAssignmentsHistory().empty()) {
-        std::cout << " * There are no completed assignments :(\n";
-    } else {
-        for(const auto& assignment : handler.getCompletedAssignmentsHistory()) {
-            std::cout << " * " << assignment->getTitle() << "\n";
-            std::cout << "   - Class: " << assignment->getParentCourseName() << "\n";
-            std::cout << "   - Due Date: " << assignment->getFormattedDueDate() << "\n";
-
-
+        std::cout << "  * No completed assignments found :(\n";
+        std::cout << "\n";
+    }
+    else {
+        for(Assignment* assignment : handler.getCompletedAssignmentsHistory()) {
+            std::cout << " * " << assignment->getTitle() << "\n"
+                      << "   - Class: " << assignment->getParentCourseName() << "\n"
+                      << "   - Due Date: " << assignment->getFormattedDueDate() << "\n";
         }
     }
     std::cout << "\n";

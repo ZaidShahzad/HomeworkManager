@@ -268,6 +268,9 @@ std::vector<Assignment*> ProjectHandler::findAssignmentsByPattern(std::string pa
             }
         }
     }
+    std::sort(assignments.begin(), assignments.end(), [](Assignment* a, Assignment* b) {
+        return a->getDaysLeft() < b->getDaysLeft();
+    });
     return assignments;
 }
 
@@ -308,6 +311,9 @@ std::vector<Assignment*> ProjectHandler::findAssignmentsInHistoryByPattern(std::
             assignments.push_back(assignment);
         }
     }
+    std::sort(assignments.begin(), assignments.end(), [](Assignment* a, Assignment* b) {
+        return a->getDaysLeft() < b->getDaysLeft();
+    });
     return assignments;
 }
 
