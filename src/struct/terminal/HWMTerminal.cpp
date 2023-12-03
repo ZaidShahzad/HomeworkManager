@@ -364,6 +364,7 @@ void HWMTerminal::handleCommands() {
 
         if(courseCreated) {
             std::cout << "You have created the Course '" << className << "'.\n";
+            handler.saveData();
         }
         else {
             std::cout << "Unfortunately, that course could not be created!\n";
@@ -376,6 +377,7 @@ void HWMTerminal::handleCommands() {
 
         if(courseDeleted) {
             std::cout << "You have deleted the Course '" << className << "'.\n";
+            handler.saveData();
         }
         else {
             std::cout << "Unfortunately, that course could not be deleted!\n";
@@ -423,6 +425,7 @@ void HWMTerminal::handleCommands() {
 
         if(assignmentDeleted) {
             std::cout << "You have deleted the Assignment with the ID '" << assignmentID << "'.\n";
+            handler.saveData();
         }
         else {
             std::cout << "Unfortunately, that assignment could not be deleted!\n";
@@ -435,6 +438,7 @@ void HWMTerminal::handleCommands() {
 
         if(completedAssignment) {
             std::cout << "You have completed the assignment '" << assignmentID << "', GOOD JOB!\n";
+            handler.saveData();
         }
         else {
             std::cout << "Unfortunately, that assignment could not be completed!\n";
