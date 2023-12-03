@@ -50,6 +50,7 @@ public:
     int getDaysLeft();
     std::string getAssignmentID();
     std::string getParentCourseName();
+    void setParentCourseName(std::string parentCourseName);
     bool isDueToday();
 };
 

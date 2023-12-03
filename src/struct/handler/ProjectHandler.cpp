@@ -182,6 +182,7 @@ bool ProjectHandler::createAssignment(std::string className, std::string assignm
     assignment->setDueDate(sysDueDate);
 
     assignment->setPriorityLevel(priorityLevel);
+    assignment->setParentCourseName(course->getCourseName());
     course->getAssignments().push_back(assignment);
     return true;
 }

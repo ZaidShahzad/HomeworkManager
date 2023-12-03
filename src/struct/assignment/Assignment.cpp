@@ -50,6 +50,9 @@ std::string Assignment::getAssignmentID() {
 std::string Assignment::getParentCourseName() {
     return this->parentCourseName;
 }
+void Assignment::setParentCourseName(std::string parentCourseName) {
+    this->parentCourseName = parentCourseName;
+}
 
 std::string Assignment::getTimeLeft() {
     auto now = system_clock::now();
