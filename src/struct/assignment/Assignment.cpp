@@ -61,12 +61,15 @@ std::string Assignment::getTimeLeft() {
     daysDiff += days(1);
     std::stringstream timeLeftStream;
     if(daysDiff.count() == 0) {
-        timeLeftStream << "Due Today";
-    } else if(daysDiff.count() > 0){
-        timeLeftStream << "Due in " << daysDiff.count() << " Days";
+        timeLeftStream << termcolor::bright_red << "Due Today" << termcolor::reset;
+    } else if(daysDiff.count() > 5) {
+        timeLeftStream << termcolor::bright_green << "Due in " << daysDiff.count() << " Days"<< termcolor::reset;
+    }
+    else if(daysDiff.count() > 2) {
+        timeLeftStream << termcolor::yellow << "Due in " << daysDiff.count() << " Days" << termcolor::reset;
     }
     else {
-        timeLeftStream << "Overdue [" << daysDiff.count() * -1 << " Days Ago]";
+        timeLeftStream << termcolor::red << "Overdue [" << daysDiff.count() * -1 << " Days Ago]" << termcolor::reset;
     }
     return timeLeftStream.str();
 }

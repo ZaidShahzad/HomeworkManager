@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "../utils/date.h"
+#include "../utils/termcolor.hpp"
 #include <chrono> // to calculate remaining time until assignment is due
 using namespace date;
 using namespace std::chrono;

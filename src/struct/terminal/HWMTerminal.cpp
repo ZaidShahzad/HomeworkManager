@@ -69,86 +69,73 @@ std::vector<std::string> HWMTerminal::getResponseFromUser() {
 
 void HWMTerminal::printCourses() {
     for(Course* course : handler.getCourses()) {
-        std::cout << "    * " << course->getCourseName() << "\n";
+        std::cout << "     * " << course->getCourseName() << "\n";
     }
 }
 
-void HWMTerminal::printAssignmentsForCourse(std::string courseName) {
-    Course* course = handler.findCourseByName(courseName);
-    if(course->getAssignments().empty()) {
-        std::cout << " * There are no assignments for this class :)\n";
-    } else {
-        for(const auto& assignment : course->getAssignments()) {
-            std::cout << " * " << assignment->getTitle() << "\n"
-                      << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
-                      << assignment->getTimeLeft() << ")\n"
-                      << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
-                      << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
-                      << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
-        }
-    }
-}
 // This function will print the main menu (first page you land on when program starts)
 void HWMTerminal::printMainMenu() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Main Menu -*-\n";
+    std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Main Page -*-\n" << termcolor::reset;
     std::cout << "\n";
-    std::cout << "    Courses:\n";
+
+    std::cout << termcolor::bright_green << "    Courses:\n" << termcolor::reset;
     if(handler.getCourses().empty()) {
-        std::cout << "    - No courses found :(\n";
+        // Make the text colored red below
+        std::cout << termcolor::red << "     * No courses found :(\n" << termcolor::reset;
     }
     else {
         this->printCourses();
     }
     std::cout << "\n";
-    std::cout << "    Commands:\n";
-    std::cout << "    - Create Course: /cc <course name>\n";
-    std::cout << "    - Delete Course: /dc <course name>\n";
-    std::cout << "    - Create Assignment: /ca <course name> <assignment name> <priority level> <due date>\n";
-    std::cout << "    - Delete Assignment: /d <assignment ID>\n";
-    std::cout << "    - Complete Assignment: /cm <assignment ID>\n";
-    std::cout << "    - View Course Assignments: /view <course name>\n";
-    std::cout << "    - View All Assignments: /all\n";
-    std::cout << "    - View Due Today Assignments: /today\n";
-    std::cout << "    - View Completed Assignments History: /history\n";
-    std::cout << "    - Search Assignments: /sa <query>\n";
-    std::cout << "    - Search History: /sh <query>\n";
-    std::cout << "    - Auto Todo List: /todolist\n";
+    std::cout << termcolor::bright_green << "    Commands:\n" << termcolor::reset;
+    std::cout << "     - " << termcolor::bright_white << "/cc <course name>" << termcolor::reset << " - Create a course\n";
+    std::cout << "     - " << termcolor::bright_white << "/dc <course name>" << termcolor::reset << " - Delete a course\n";
+    std::cout << "     - " << termcolor::bright_white << "/ca <course name> <assignment name> <priority level> <due date>" << termcolor::reset << " - Create an assignment\n";
+    std::cout << "     - " << termcolor::bright_white << "/d <assignment ID>" << termcolor::reset << " - Delete an assignment\n";
+    std::cout << "     - " << termcolor::bright_white << "/cm <assignment ID>" << termcolor::reset << " - Complete an assignment\n";
+    std::cout << "     - " << termcolor::bright_white << "/sa <query>" << termcolor::reset << " - Search for an assignment\n";
+    std::cout << "     - " << termcolor::bright_white << "/sh <query>" << termcolor::reset << " - Search for an assignment in history\n";
+    std::cout << "     - " << termcolor::bright_white << "/history" << termcolor::reset << " - View completed assignments history\n";
+    std::cout << "     - " << termcolor::bright_white << "/today" << termcolor::reset << " - View assignments due today\n";
+    std::cout << "     - " << termcolor::bright_white << "/all" << termcolor::reset << " - View all assignments\n";
+    std::cout << "     - " << termcolor::bright_white << "/view <course name>" << termcolor::reset << " - View assignments for a course\n";
+    std::cout << "     - " << termcolor::bright_white << "/todolist" << termcolor::reset << " - View auto todo list\n";
     std::cout << "\n";
-    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
 
 // This function will print the page where it will show all assignments that are due today
 void HWMTerminal::printDueTodayAssignmentsPage() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Due Today -*-\n";
+    std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Due Today -*-\n" << termcolor::reset;
     std::cout << "\n";
     if(handler.getCourses().empty()) {
-        std::cout << "  * No courses found :(\n";
+        std::cout << termcolor::red << "    No courses found :(\n" << termcolor::reset;
         std::cout << "\n";
     }
     else {
         for(Course* course : handler.getCourses()) {
-            std::cout << course->getCourseName() << "'s Assignments:\n";
+            std::cout << termcolor::bright_green << "    " << course->getCourseName() << "'s Assignments:\n" << termcolor::reset;
             if(course->getAssignments().empty()) {
-                std::cout << " * There are no assignments for this class :)\n";
+                std::cout << "     * There are no assignments for this class :)\n";
             } else {
                 for(const auto& assignment : course->getAssignments()) {
                     if(assignment->isDueToday()) {
-                        std::cout << " * " << assignment->getTitle() << "\n"
-                                  << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
-                                  << assignment->getTimeLeft() << ")\n"
-                                  << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
-                                  << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
-                                  << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+                        std::cout << "     * " << termcolor::bright_white << assignment->getTitle() << termcolor::reset << "\n"
+                                  << "       - Due Date: " << termcolor::bright_white << assignment->getFormattedDueDate() << " ("
+                                  << assignment->getTimeLeft() << ")" << termcolor::reset << "\n"
+                                  << "       - Priority Level: " << termcolor::bright_white << assignment->getPriorityLevel() << termcolor::reset <<"\n"
+                                  << "       - Complete? (Run Command): " << termcolor::bright_white << "/cm " << termcolor::bright_white << assignment->getAssignmentID() << termcolor::reset <<"\n"
+                                  << "       - Delete? (Run Command): " << termcolor::bright_white << "/d " << assignment->getAssignmentID() << termcolor::reset <<"\n";
                     }
                 }
             }
             std::cout << "\n";
         }
     }
-    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 
 }
@@ -156,31 +143,31 @@ void HWMTerminal::printDueTodayAssignmentsPage() {
 // This function will print the page where it will show all assignments
 void HWMTerminal::printAllAssignmentsPage() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | All Assignments -*-\n";
+    std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | All Assignments -*-\n" << termcolor::reset;
     std::cout << "\n";
     if(handler.getCourses().empty()) {
-        std::cout << "  * No courses found :(\n";
+        std::cout << termcolor::red << "    No courses found :(\n" << termcolor::reset;
         std::cout << "\n";
     }
     else {
         for(Course* course : handler.getCourses()) {
-            std::cout << course->getCourseName() << "'s Assignments:\n";
+            std::cout << termcolor::bright_green << "    " << course->getCourseName() << "'s Assignments:\n" << termcolor::reset;
             if(course->getAssignments().empty()) {
-                std::cout << " * There are no assignments for this class :)\n";
+                std::cout << "     * There are no assignments for this class :)\n";
             } else {
                 for(const auto& assignment : course->getAssignments()) {
-                    std::cout << " * " << assignment->getTitle() << "\n"
-                              << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
-                              << assignment->getTimeLeft() << ")\n"
-                              << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
-                              << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
-                              << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+                    std::cout << "     * " << termcolor::bright_white << assignment->getTitle() << termcolor::reset << "\n"
+                              << "       - Due Date: " << termcolor::bright_white << assignment->getFormattedDueDate() << " ("
+                              << assignment->getTimeLeft() << ")" << termcolor::reset << "\n"
+                              << "       - Priority Level: " << termcolor::bright_white << assignment->getPriorityLevel() << termcolor::reset <<"\n"
+                              << "       - Complete? (Run Command): " << termcolor::bright_white << "/cm " << termcolor::bright_white << assignment->getAssignmentID() << termcolor::reset <<"\n"
+                              << "       - Delete? (Run Command): " << termcolor::bright_white << "/d " << assignment->getAssignmentID() << termcolor::reset <<"\n";
                 }
             }
             std::cout << "\n";
         }
     }
-    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
 
@@ -188,7 +175,7 @@ void HWMTerminal::printAllAssignmentsPage() {
 void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
     std::cout << "\n";
     courseName[0] = std::toupper(courseName[0]);
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | " << courseName << "'s Assignments -*-\n";
+    std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | " << courseName << "'s Assignments -*-\n" << termcolor::reset;
     std::cout << "\n";
     if(handler.getCourses().empty()) {
         std::cout << "  * No courses found :(\n";
@@ -196,42 +183,42 @@ void HWMTerminal::printViewCourseAssignmentsPage(std::string courseName) {
     }
     else {
         Course* course = handler.findCourseByName(courseName);
-        std::cout << course->getCourseName() << "'s Assignments:\n";
+        std::cout << termcolor::bright_green << "    " << course->getCourseName() << "'s Assignments:\n" << termcolor::reset;
         if(course->getAssignments().empty()) {
-            std::cout << " * There are no assignments for this class :)\n";
+            std::cout << "     * There are no assignments for this class :)\n";
         } else {
             for(const auto& assignment : course->getAssignments()) {
-                std::cout << " * " << assignment->getTitle() << "\n"
-                          << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
-                          << assignment->getTimeLeft() << ")\n"
-                          << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
-                          << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
-                          << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+                std::cout << "     * " << termcolor::bright_white << assignment->getTitle() << termcolor::reset << "\n"
+                          << "       - Due Date: " << termcolor::bright_white << assignment->getFormattedDueDate() << " ("
+                          << assignment->getTimeLeft() << ")" << termcolor::reset << "\n"
+                          << "       - Priority Level: " << termcolor::bright_white << assignment->getPriorityLevel() << termcolor::reset <<"\n"
+                          << "       - Complete? (Run Command): " << termcolor::bright_white << "/cm " << termcolor::bright_white << assignment->getAssignmentID() << termcolor::reset <<"\n"
+                          << "       - Delete? (Run Command): " << termcolor::bright_white << "/d " << assignment->getAssignmentID() << termcolor::reset <<"\n";
             }
         }
         std::cout << "\n";
     }
-    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
 
 void HWMTerminal::printViewHistoryPage() {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Completed Assignments History -*-\n";
+    std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Completed Assignments History -*-\n" << termcolor::reset;
     std::cout << "\n";
+    std::cout << termcolor::bright_green << "    Completed Assignments:\n" << termcolor::reset;
     if(handler.getCompletedAssignmentsHistory().empty()) {
-        std::cout << "  * No completed assignments found :(\n";
-        std::cout << "\n";
+        std::cout << termcolor::red << "     * No completed assignments found :(\n" << termcolor::reset;
     }
     else {
         for(Assignment* assignment : handler.getCompletedAssignmentsHistory()) {
-            std::cout << " * " << assignment->getTitle() << "\n"
-                      << "   - Class: " << assignment->getParentCourseName() << "\n"
-                      << "   - Due Date: " << assignment->getFormattedDueDate() << "\n";
+            std::cout << "     * " << termcolor::bright_white << assignment->getTitle() << termcolor::reset << "\n"
+                      << "       - Class: " << termcolor::bright_white << assignment->getParentCourseName() << termcolor::reset << "\n"
+                      << "       - Due Date: " << termcolor::bright_white <<assignment->getFormattedDueDate() << termcolor::reset <<"\n";
         }
     }
     std::cout << "\n";
-    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
 
@@ -287,7 +274,7 @@ void HWMTerminal::gotoAllAssignmentsPage() {
 void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
     this->clearTerminal();
     if(!handler.courseExists(courseName)) {
-        std::cout << "That course does not exist!\n";
+        std::cerr << "That course does not exist!\n";
         this->gotoMainMenu();
         return;
     }
@@ -300,26 +287,25 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
 
 void HWMTerminal::printSearchAssignmentsPage(std::string query) {
     std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Search Assignments -*-\n";
+    std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Search Assignments -*-\n" << termcolor::reset;
     std::cout << "\n";
     std::vector<Assignment*> assignmentsFound = handler.findAssignmentsByPattern(query);
     if(assignmentsFound.empty()) {
-        std::cout << "No assignments found with the query '" << query << "'\n";
+        std::cout << termcolor::red << "    No Assignments found with the query '" << termcolor::reset << query << termcolor::red <<"':\n" << termcolor::reset;
     }
     else {
-        std::cout << "Assignments found with the query '" << query << "':\n";
+        std::cout << termcolor::bright_green << "    Assignments found with the query '" << termcolor::reset << query << termcolor::bright_green <<"':\n" << termcolor::reset;
         for(Assignment* assignment : assignmentsFound) {
-            std::cout << " * " << assignment->getTitle() << "\n"
-                      << "   - Class: " << assignment->getParentCourseName() << "\n"
-                      << "   - Due Date: " << assignment->getFormattedDueDate() << " ("
-                      << assignment->getTimeLeft() << ")\n"
-                      << "   - Priority Level: " << assignment->getPriorityLevel() << "\n"
-                      << "   - Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
-                      << "   - Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+            std::cout << "     * " << termcolor::bright_white << assignment->getTitle() << termcolor::reset << "\n"
+                      << "       - Due Date: " << termcolor::bright_white << assignment->getFormattedDueDate() << " ("
+                      << assignment->getTimeLeft() << ")" << termcolor::reset << "\n"
+                      << "       - Priority Level: " << termcolor::bright_white << assignment->getPriorityLevel() << termcolor::reset <<"\n"
+                      << "       - Complete? (Run Command): " << termcolor::bright_white << "/cm " << termcolor::bright_white << assignment->getAssignmentID() << termcolor::reset <<"\n"
+                      << "       - Delete? (Run Command): " << termcolor::bright_white << "/d " << assignment->getAssignmentID() << termcolor::reset <<"\n";
         }
     }
     std::cout << "\n";
-    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
 
@@ -331,23 +317,23 @@ void HWMTerminal::gotoSearchAssignmentsPage(std::string query) {
 }
 
 void HWMTerminal::printSearchHistoryPage(std::string query) {
-std::cout << "\n";
-    std::cout << "-*- Homework Manager (" << projectInfo.getVersion() << ") | Search History -*-\n";
+    std::cout << "\n";
+    std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Search History  -*-\n" << termcolor::reset;
     std::cout << "\n";
     std::vector<Assignment*> assignmentsFound = handler.findAssignmentsInHistoryByPattern(query);
     if(assignmentsFound.empty()) {
-        std::cout << "No assignments found with the query '" << query << "'\n";
+        std::cout << termcolor::red << "    No Assignments found with the query '" << termcolor::reset << query << termcolor::red <<"':\n" << termcolor::reset;
     }
     else {
-        std::cout << "Assignments found with the query '" << query << "':\n";
+        std::cout << termcolor::bright_green << "    Assignments found with the query '" << termcolor::reset << query << termcolor::bright_green <<"':\n" << termcolor::reset;
         for(Assignment* assignment : assignmentsFound) {
-            std::cout << " * " << assignment->getTitle() << "\n"
-                      << "   - Class: " << assignment->getParentCourseName() << "\n"
-                      << "   - Due Date: " << assignment->getFormattedDueDate() << "\n";
+            std::cout << "     * " << termcolor::bright_white << assignment->getTitle() << termcolor::reset << "\n"
+                      << "       - Class: " << termcolor::bright_white << assignment->getParentCourseName() << termcolor::reset << "\n"
+                      << "       - Due Date: " << termcolor::bright_white <<assignment->getFormattedDueDate() << termcolor::reset <<"\n";
         }
     }
     std::cout << "\n";
-    std::cout << "--> Enter '/main' to go back to main menu\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
 
@@ -385,11 +371,11 @@ void HWMTerminal::handleCommands() {
         bool courseCreated = handler.createCourse(className);
 
         if(courseCreated) {
-            std::cout << "You have created the Course '" << className << "'.\n";
+            std::cout << termcolor::bright_green << "You have created the course '" << termcolor::reset << className << termcolor::bright_green <<"'.\n" << termcolor::reset;
             handler.saveData();
         }
         else {
-            std::cout << "Unfortunately, that course could not be created!\n";
+            std::cerr << "Unfortunately, that course could not be created!\n";
         }
         this->refreshPage();
     }
@@ -398,11 +384,11 @@ void HWMTerminal::handleCommands() {
         bool courseDeleted = handler.deleteCourse(className);
 
         if(courseDeleted) {
-            std::cout << "You have deleted the Course '" << className << "'.\n";
+            std::cout << termcolor::red << "You have deleted the course '" << termcolor::reset << className << termcolor::red <<"'.\n" << termcolor::reset;
             handler.saveData();
         }
         else {
-            std::cout << "Unfortunately, that course could not be deleted!\n";
+            std::cerr << "Unfortunately, that course could not be deleted!\n";
         }
         this->refreshPage();
     }
@@ -428,16 +414,16 @@ void HWMTerminal::handleCommands() {
         bool assignmentCreated = handler.createAssignment(courseName, assignmentName, priorityLevel,dueDate);
         if(assignmentCreated) {
             Assignment* assignment = handler.findAssignmentByID(courseName + "-" + assignmentName);
-            std::cout << "Added " << assignment->getTitle() << " to " << courseName << "\n"
-                      << "  * Due Date: " << assignment->getFormattedDueDate() << " ("
-                      << assignment->getTimeLeft() << ")\n"
-                      << "  * Priority Level: " << assignment->getPriorityLevel() << "\n"
-                      << "  * Complete? (Run Command): /cm " << assignment->getAssignmentID() << "\n"
-                      << "  * Delete? (Run Command): /d " << assignment->getAssignmentID() << "\n";
+            std::cout << termcolor::bright_green << "You have created the assignment '" << termcolor::reset << assignment->getTitle() << termcolor::bright_green <<"'.\n" << termcolor::reset
+                      << " - Due Date: " << termcolor::bright_white << assignment->getFormattedDueDate() << " ("
+                      << assignment->getTimeLeft() << ")" << termcolor::reset << "\n"
+                      << " - Priority Level: " << termcolor::bright_white << assignment->getPriorityLevel() << termcolor::reset <<"\n"
+                      << " - Complete? (Run Command): " << termcolor::bright_white << "/cm " << termcolor::bright_white << assignment->getAssignmentID() << termcolor::reset <<"\n"
+                      << " - Delete? (Run Command): " << termcolor::bright_white << "/d " << assignment->getAssignmentID() << termcolor::reset <<"\n";
             handler.saveData();
         }
         else {
-            std::cout << "Unfortunately, the assignment could not be created!\n";
+            std::cerr << "Unfortunately, the assignment could not be created!\n";
         }
         this->refreshPage();
     }
@@ -446,11 +432,11 @@ void HWMTerminal::handleCommands() {
         bool assignmentDeleted = handler.deleteAssignment(assignmentID);
 
         if(assignmentDeleted) {
-            std::cout << "You have deleted the Assignment with the ID '" << assignmentID << "'.\n";
+            std::cout << termcolor::red << "You have deleted the assignment with the ID '" << termcolor::reset << assignmentID << termcolor::red <<"'.\n" << termcolor::reset;
             handler.saveData();
         }
         else {
-            std::cout << "Unfortunately, that assignment could not be deleted!\n";
+            std::cerr << "Unfortunately, that assignment could not be deleted!\n";
         }
         this->refreshPage();
     }
@@ -459,11 +445,11 @@ void HWMTerminal::handleCommands() {
         bool completedAssignment = handler.completeAssignment(assignmentID);
 
         if(completedAssignment) {
-            std::cout << "You have completed the assignment '" << assignmentID << "', GOOD JOB!\n";
+            std::cout << termcolor::bright_green << "You have completed the assignment with the ID '" << termcolor::reset << assignmentID << termcolor::bright_green <<"', GOOD JOB!\n" << termcolor::reset;
             handler.saveData();
         }
         else {
-            std::cout << "Unfortunately, that assignment could not be completed!\n";
+            std::cerr << "Unfortunately, that assignment could not be completed!\n";
         }
         this->refreshPage();
     }
@@ -496,7 +482,7 @@ void HWMTerminal::handleCommands() {
     }
     // Invalid args check
     else {
-        std::cout << "Invalid Args, you have typed a command incorrectly.\n";
+        std::cerr << "Invalid Args, you have typed a command incorrectly.\n";
         this->refreshPage();
         return;
     }

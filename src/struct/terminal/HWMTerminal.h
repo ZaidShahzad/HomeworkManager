@@ -35,7 +35,6 @@ public:
     void printAllAssignmentsPage();
     void printViewCourseAssignmentsPage(std::string courseName);
     void printCourses();
-    void printAssignmentsForCourse(std::string courseName);
     void printViewHistoryPage();
     void printSearchAssignmentsPage(std::string query);
     void printSearchHistoryPage(std::string query);

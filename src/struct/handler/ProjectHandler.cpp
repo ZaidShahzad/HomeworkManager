@@ -190,7 +190,7 @@ bool ProjectHandler::createAssignment(std::string className, std::string assignm
 bool ProjectHandler::deleteAssignment(std::string assignmentID) {
     Assignment* assignment = this->findAssignmentByID(assignmentID);
     if(assignment == nullptr) {
-        std::cout << "That assignment ID was invalid!\n";
+        std::cerr < "That assignment ID was invalid!\n";
         return false;
     }
     Course* course = this->findCourseByName(assignment->getParentCourseName());
@@ -205,7 +205,7 @@ bool ProjectHandler::deleteAssignment(std::string assignmentID) {
 bool ProjectHandler::completeAssignment(std::string assignmentID) {
     Assignment* assignment = this->findAssignmentByID(assignmentID);
     if(assignment == nullptr) {
-        std::cout << "That assignment ID was invalid!\n";
+        std::cerr << "That assignment ID was invalid!\n";
         return false;
     }
     Assignment* completedAssignment = new Assignment(assignment);
