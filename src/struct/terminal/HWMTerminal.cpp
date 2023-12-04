@@ -91,7 +91,7 @@ void HWMTerminal::printMainMenu() {
     std::cout << termcolor::bright_green << "    Commands:\n" << termcolor::reset;
     std::cout << "     - " << termcolor::bright_white << "/cc <course name>" << termcolor::reset << " - Create a course\n";
     std::cout << "     - " << termcolor::bright_white << "/dc <course name>" << termcolor::reset << " - Delete a course\n";
-    std::cout << "     - " << termcolor::bright_white << "/ca <course name> <assignment name> <priority level> <due date>" << termcolor::reset << " - Create an assignment\n";
+    std::cout << "     - " << termcolor::bright_white << "/ca <course name> <assignment name> <priority level (1-5)> <due date (mm-dd-yyyy)>" << termcolor::reset << " - Create an assignment\n";
     std::cout << "     - " << termcolor::bright_white << "/d <assignment ID>" << termcolor::reset << " - Delete an assignment\n";
     std::cout << "     - " << termcolor::bright_white << "/cm <assignment ID>" << termcolor::reset << " - Complete an assignment\n";
     std::cout << "     - " << termcolor::bright_white << "/sa <query>" << termcolor::reset << " - Search for an assignment\n";
@@ -352,13 +352,41 @@ void HWMTerminal::gotoSearchHistoryPage(std::string query) {
     this->printSearchHistoryPage(query);
     this->handleCommands();
 }
-///TODO -essam
+
 void HWMTerminal::gotoAutoTodoList() {
-    this->clearTerminal();
-    this->setCurrentPage(AUTO_TODO_LIST);
-    std::cout << "How many days in advance do you wish to start your work? [Enter a number]\n";
-    return;
+    int userDaysInput;
+    std::cout << "How many days in advance do you wish to start your work? [Enter a number]: ";
+    std::cin >> userDaysInput;
+
+    // Getting all assignments in order to calculate the priority of each one
+    std::vector<Assignment*> assignments = handler.getAllAssignments();
+    std::vector<std::pair<Assignment*, double>> filteredAssignments;
+
+    for (auto* assignment : assignments) {
+
+        int daysUntilDue = assignment->getDaysLeft();
+        int priorityLevel = assignment->getPriorityLevel();
+
+        double orderValue = static_cast<double>(daysUntilDue) / priorityLevel;
+
+        if (orderValue <= userDaysInput) {
+            filteredAssignments.push_back(std::make_pair(assignment, orderValue));
+        }
+    }
+
+    // Sorting the assignments based on the priority of each one
+    std::sort(filteredAssignments.begin(), filteredAssignments.end(),
+              [](const std::pair<Assignment*, double>& a, const std::pair<Assignment*, double>& b) {
+                  return a.second < b.second;
+              });
+
+    // Displaying the sorted assignments (Ordered by Priority)
+    std::cout << "Assignments to do (Ordered by Priority):" << std::endl;
+    for (const auto& pair : filteredAssignments) {
+        std::cout << pair.first->getTitle() << std::endl;
+    }
 }
+
 
 // This function will send the user to the Main Menu and wait for a response. When the response is given,
 // it will do the necessary actions depending on the response.

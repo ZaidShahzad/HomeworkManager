@@ -57,6 +57,7 @@ public:
     void saveData();
     void generateAssignments(int numberOfCourses, int numberOfAssignments);
 
+    std::vector<Assignment *> getAllAssignments();
 };
 
 

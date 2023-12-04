@@ -332,3 +332,19 @@ void ProjectHandler::generateAssignments(int numberOfCourses, int numberOfAssign
         }
     }
 }
+
+std::vector<Assignment*> ProjectHandler::getAllAssignments() {
+    std::vector<Assignment*> allAssignments;
+
+    std::vector<Course*> courses = this->getCourses();
+
+    // Iterating through each course to get its assignments
+    for (Course* course : courses) {
+        std::vector<Assignment*> courseAssignments = course->getAssignments();
+
+        // Adding the course's assignments to the allAssignments vector
+        allAssignments.insert(allAssignments.end(), courseAssignments.begin(), courseAssignments.end());
+    }
+
+    return allAssignments;
+}
