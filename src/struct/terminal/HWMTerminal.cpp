@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <sstream>
 #include <iomanip>
-#include <unistd.h>
 
 ProjectHandler handler = Utils::getInstance()->getProjectHandler();
 ProjectInfo projectInfo = Utils::getInstance()->getProjectHandler().getProjectInfo();
