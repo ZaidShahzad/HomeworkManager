@@ -55,6 +55,7 @@ public:
     int findAssignmentIndexInVectorByID(std::string assignmentID);
     bool isValidDateFormat(std::string string);
     void saveData();
+    void generateAssignments(int numberOfCourses, int numberOfAssignments);
 
 };
 

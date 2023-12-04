@@ -317,3 +317,18 @@ std::vector<Assignment*> ProjectHandler::findAssignmentsInHistoryByPattern(std::
     return assignments;
 }
 
+void ProjectHandler::generateAssignments(int numberOfCourses, int numberOfAssignments) {
+    for(int i = 0; i < numberOfCourses; i++) {
+        std::string courseName = "Course-#" + std::to_string(i + 1);
+        this->createCourse(courseName);
+        for(int j = 0; j < numberOfAssignments; j++) {
+            std::string assignmentName = "Assignment-" + std::to_string(j + 1);
+            int priorityLevel = rand() % 5 + 1;
+            int month = rand() % 12 + 1;
+            int day = rand() % 28 + 1;
+            int year = 2023;
+            std::string dueDate = std::to_string(month) + "-" + std::to_string(day) + "-" + std::to_string(year);
+            this->createAssignment(courseName, assignmentName, priorityLevel, dueDate);
+        }
+    }
+}

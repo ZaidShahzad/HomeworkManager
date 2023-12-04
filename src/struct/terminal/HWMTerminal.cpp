@@ -102,6 +102,7 @@ void HWMTerminal::printMainMenu() {
     std::cout << "     - " << termcolor::bright_white << "/view <course name>" << termcolor::reset << " - View assignments for a course\n";
     std::cout << "     - " << termcolor::bright_white << "/todolist" << termcolor::reset << " - View auto todo list\n";
     std::cout << "\n";
+    std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/generate <# of courses> <# of assignments in courses>" << termcolor::reset << termcolor::bright_green << " - Generate assignments & courses to test benchmarking\n" << termcolor::reset;
     std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
@@ -481,6 +482,22 @@ void HWMTerminal::handleCommands() {
     else if(args == 2 && command == "/view") {
         std::string className = userInput[1];
         this->gotoViewCourseAssignmentsPage(className);
+    }
+    else if(args == 3 && command == "/generate") {
+        int numberOfCourses = 0;
+        int numberOfAssignments = 0;
+        try {
+            numberOfCourses = std::stoi(userInput[1]);
+            numberOfAssignments = std::stoi(userInput[2]);
+        }
+        catch (std::invalid_argument exception) {
+            std::cerr << "Your number of courses or assignments was invalid.\n";
+            this->refreshPage();
+            return;
+        }
+        handler.generateAssignments(numberOfCourses, numberOfAssignments);
+        std::cout << termcolor::bright_green << "Generated " << numberOfCourses << " courses with " << numberOfAssignments << " assignments each.\n" << termcolor::reset;
+        this->refreshPage();
     }
     else if(args == 1 && command == "/todolist") {
         this->gotoAutoTodoList();
