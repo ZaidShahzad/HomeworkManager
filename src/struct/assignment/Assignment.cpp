@@ -59,6 +59,7 @@ std::string Assignment::getTimeLeft() {
     auto nowDays = floor<days>(now);
     auto daysDiff = dueDate - nowDays;
     std::stringstream timeLeftStream;
+    daysDiff += days(1);
     if(daysDiff.count() == 0) {
         timeLeftStream << termcolor::bright_red << "Due Today" << termcolor::reset;
     } else if(daysDiff.count() > 0) {
