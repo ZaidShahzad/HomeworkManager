@@ -380,9 +380,9 @@ void HWMTerminal::gotoAutoTodoList() {
               });
 
     // Displaying the sorted assignments (Ordered by Priority)
-    std::cout << "Assignments to do (Ordered by Priority):" << std::endl;
+    std::cout << termcolor::yellow << termcolor::bold << "Assignments to do (Ordered by Priority):" << std::endl;
     for (const auto& pair : filteredAssignments) {
-        std::cout << pair.first->getTitle() << std::endl;
+        std::cout << termcolor::yellow << termcolor::bold << " - " << pair.first->getTitle() << std::endl;
     }
 }
 
