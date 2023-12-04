@@ -286,6 +286,7 @@ void HWMTerminal::gotoViewCourseAssignmentsPage(std::string courseName) {
 }
 
 void HWMTerminal::printSearchAssignmentsPage(std::string query) {
+    auto start = std::chrono::high_resolution_clock::now();
     std::cout << "\n";
     std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Search Assignments -*-\n" << termcolor::reset;
     std::cout << "\n";
@@ -304,7 +305,10 @@ void HWMTerminal::printSearchAssignmentsPage(std::string query) {
                       << "       - Delete? (Run Command): " << termcolor::bright_white << "/d " << assignment->getAssignmentID() << termcolor::reset <<"\n";
         }
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     std::cout << "\n";
+    std::cout << termcolor::bright_green << "    Time taken to search: " << termcolor::reset << termcolor::bright_white << duration << "ms" << termcolor::reset << "\n";
     std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
@@ -317,6 +321,7 @@ void HWMTerminal::gotoSearchAssignmentsPage(std::string query) {
 }
 
 void HWMTerminal::printSearchHistoryPage(std::string query) {
+    auto start = std::chrono::high_resolution_clock::now();
     std::cout << "\n";
     std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Search History  -*-\n" << termcolor::reset;
     std::cout << "\n";
@@ -332,7 +337,10 @@ void HWMTerminal::printSearchHistoryPage(std::string query) {
                       << "       - Due Date: " << termcolor::bright_white <<assignment->getFormattedDueDate() << termcolor::reset <<"\n";
         }
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     std::cout << "\n";
+    std::cout << termcolor::bright_green << "    Time taken to search: " << termcolor::reset << termcolor::bright_white << duration << "ms" << termcolor::reset << "\n";
     std::cout << termcolor::bright_green << "    <- " << termcolor::reset <<  termcolor::bright_white << "/main" << termcolor::reset << termcolor::bright_green << " - Go back to main menu\n" << termcolor::reset;
     std::cout << "\n";
 }
