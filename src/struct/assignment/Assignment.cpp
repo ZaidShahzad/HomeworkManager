@@ -58,18 +58,14 @@ std::string Assignment::getTimeLeft() {
     auto now = system_clock::now();
     auto nowDays = floor<days>(now);
     auto daysDiff = dueDate - nowDays;
-    daysDiff += days(1);
     std::stringstream timeLeftStream;
     if(daysDiff.count() == 0) {
         timeLeftStream << termcolor::bright_red << "Due Today" << termcolor::reset;
-    } else if(daysDiff.count() > 5) {
-        timeLeftStream << termcolor::bright_green << "Due in " << daysDiff.count() << " Days"<< termcolor::reset;
-    }
-    else if(daysDiff.count() > 2) {
-        timeLeftStream << termcolor::yellow << "Due in " << daysDiff.count() << " Days" << termcolor::reset;
+    } else if(daysDiff.count() > 0) {
+        timeLeftStream << termcolor::bright_green << "Due in " << daysDiff.count() << " Day(s)"<< termcolor::reset;
     }
     else {
-        timeLeftStream << termcolor::red << "Overdue [" << daysDiff.count() * -1 << " Days Ago]" << termcolor::reset;
+        timeLeftStream << termcolor::red << "Overdue [" << daysDiff.count() * -1 << " Day(s) Ago]" << termcolor::reset;
     }
     return timeLeftStream.str();
 }
