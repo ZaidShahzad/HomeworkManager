@@ -1,5 +1,7 @@
 #include "ProjectHandler.h"
 #include "../utils/Utils.h"
+#undef min
+#include <algorithm>
 
 ProjectHandler::ProjectHandler() {
     this->loadData();
