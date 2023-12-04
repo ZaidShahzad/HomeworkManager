@@ -78,7 +78,7 @@ void HWMTerminal::printMainMenu() {
     std::cout << termcolor::bright_green << "-*- Homework Manager (" << termcolor::bright_white << projectInfo.getVersion() << termcolor::bright_green << ") | Main Page -*-\n" << termcolor::reset;
     std::cout << "\n";
 
-    std::cout << termcolor::bright_green << "    Courses:\n" << termcolor::reset;
+    std::cout << termcolor::bright_green << "    Courses:\n" << termcolor::reset << termcolor::bright_cyan;
     if(handler.getCourses().empty()) {
         // Make the text colored red below
         std::cout << termcolor::red << "     * No courses found :(\n" << termcolor::reset;
