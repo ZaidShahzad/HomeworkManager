@@ -7,6 +7,7 @@ A program that allows you to manage your homework assignments in an efficient wa
 - [Dependencies](#dependencies)
 - [Usage](#usage)
 - [Commands](#commands)
+- [Authors](#authors)
 
 ## Overview
 Homework Manager is a C++ program designed to streamline your homework assignment organization. It provides a structured approach to managing courses, projects, and assignments in a user-friendly manner.
@@ -69,9 +70,9 @@ If you prefer Visual Studio Code, you can compile and run the program using the 
 - /main - `Go back to the main menu`
 
 ## Authors
-[Diegotyb](https://github.com/Diegotyb)
-[Essamabd03](https://github.com/essamabd03)
-[AdamMesiya](https://github.com/AdamMesiya)
+1. [Diegotyb](https://github.com/Diegotyb)
+2. [Essamabd03](https://github.com/essamabd03)
+3. [AdamMesiya](https://github.com/AdamMesiya)
 
 ## Conclusion
 Thank you for checking out our project! We hope you find it useful and easy to use.
