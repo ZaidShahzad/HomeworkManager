@@ -70,9 +70,10 @@ If you prefer Visual Studio Code, you can compile and run the program using the 
 - /main - `Go back to the main menu`
 
 ## Authors
-1. [Diegotyb](https://github.com/Diegotyb)
-2. [Essamabd03](https://github.com/essamabd03)
-3. [AdamMesiya](https://github.com/AdamMesiya)
+1. [Zaid Shahzad](https://github.com/ZaidShahzad)
+2. [Diegotyb](https://github.com/Diegotyb)
+3. [Essamabd03](https://github.com/essamabd03)
+4. [AdamMesiya](https://github.com/AdamMesiya)
 
 ## Conclusion
 Thank you for checking out our project! We hope you find it useful and easy to use.
